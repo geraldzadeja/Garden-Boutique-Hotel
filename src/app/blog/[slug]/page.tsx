@@ -101,7 +101,7 @@ export default function BlogPostPage() {
       <Navigation variant="solid" />
 
       {/* Hero with Cover Image */}
-      <section className="relative h-[50vh] md:h-[60vh] flex items-end mt-[90px] overflow-hidden">
+      <section className="relative h-[50vh] md:h-[60vh] flex items-end mt-[70px] sm:mt-[90px] overflow-hidden">
         {post.coverImage ? (
           <Image
             src={post.coverImage}

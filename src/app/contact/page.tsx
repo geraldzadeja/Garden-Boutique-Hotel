@@ -51,7 +51,7 @@ export default function ContactPage() {
       <Navigation variant="solid" />
 
       {/* Hero Section */}
-      <section className="relative h-[50vh] flex items-center justify-center mt-[90px] overflow-hidden">
+      <section className="relative h-[50vh] flex items-center justify-center mt-[70px] sm:mt-[90px] overflow-hidden">
         <video
           autoPlay
           muted

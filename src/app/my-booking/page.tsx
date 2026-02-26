@@ -134,14 +134,14 @@ export default function MyBookingPage() {
       <Navigation variant="solid" />
 
       {/* Header */}
-      <section className="mt-[90px] py-16 md:py-20 bg-[#111111]">
+      <section className="mt-[70px] sm:mt-[90px] py-10 sm:py-16 md:py-20 bg-[#111111]">
         <div className="max-w-3xl mx-auto text-center px-4">
-          <p className="text-white/50 text-[10px] tracking-[0.35em] uppercase mb-4 font-medium">Guest Services</p>
-          <h1 className="text-[40px] md:text-[52px] leading-[1] font-serif text-white">Manage Booking</h1>
+          <p className="text-white/50 text-[10px] tracking-[0.35em] uppercase mb-3 sm:mb-4 font-medium">Guest Services</p>
+          <h1 className="text-[30px] sm:text-[40px] md:text-[52px] leading-[1] font-serif text-white">Manage Booking</h1>
         </div>
       </section>
 
-      <div className="max-w-3xl mx-auto px-4 py-12 md:py-16">
+      <div className="max-w-3xl mx-auto px-4 py-8 sm:py-12 md:py-16">
 
         {/* Error Banner */}
         {error && (
@@ -222,10 +222,10 @@ export default function MyBookingPage() {
 
             <div className="border border-[#e5e5e5] rounded-sm overflow-hidden mb-6">
               {/* Reservation Header */}
-              <div className="bg-[#faf9f7] px-6 md:px-8 py-5 border-b border-[#e5e5e5] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="bg-[#faf9f7] px-4 sm:px-6 md:px-8 py-4 sm:py-5 border-b border-[#e5e5e5] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <p className="text-[10px] text-[#999] tracking-[0.2em] uppercase font-medium mb-1">Reservation Reference</p>
-                  <p className="text-[18px] font-mono font-semibold text-[#111111] tracking-wider">{reservationRef}</p>
+                  <p className="text-[16px] sm:text-[18px] font-mono font-semibold text-[#111111] tracking-wider break-all sm:break-normal">{reservationRef}</p>
                 </div>
                 <span className={`inline-flex items-center self-start px-3 py-1.5 rounded-full text-[11px] font-medium tracking-wide uppercase ${overallStatus.bg} ${overallStatus.text} border ${overallStatus.border}`}>
                   {overallStatus.label}
@@ -233,7 +233,7 @@ export default function MyBookingPage() {
               </div>
 
               {/* Reservation Details */}
-              <div className="px-6 md:px-8 py-6 space-y-4">
+              <div className="px-4 sm:px-6 md:px-8 py-5 sm:py-6 space-y-4">
                 {/* Dates & Duration */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -302,7 +302,7 @@ export default function MyBookingPage() {
 
               {/* Cancel Action */}
               {bookings.some(b => canCancel(b.status)) && (
-                <div className="px-6 md:px-8 py-4 border-t border-[#e5e5e5] bg-[#faf9f7]">
+                <div className="px-4 sm:px-6 md:px-8 py-4 border-t border-[#e5e5e5] bg-[#faf9f7]">
                   <button
                     onClick={() => setShowCancelModal(firstBooking.bookingNumber)}
                     className="text-[12px] text-red-600 hover:text-red-700 font-medium tracking-[0.1em] uppercase transition-colors"
@@ -344,8 +344,8 @@ export default function MyBookingPage() {
       {showCancelModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/50" onClick={() => !cancelling && setShowCancelModal(null)} />
-          <div className="relative bg-white rounded-sm max-w-md w-full p-8 shadow-xl">
-            <h3 className="text-[20px] font-serif text-[#111111] mb-4">Cancel Reservation</h3>
+          <div className="relative bg-white rounded-sm max-w-md w-full p-5 sm:p-8 shadow-xl">
+            <h3 className="text-[18px] sm:text-[20px] font-serif text-[#111111] mb-3 sm:mb-4">Cancel Reservation</h3>
             <p className="text-[14px] text-[#32373c] font-light leading-[1.7] mb-2">
               Are you sure you want to cancel reservation <strong className="font-medium font-mono">{showCancelModal}</strong>?
               {bookings && bookings.length > 1 && ' This will cancel all rooms in this reservation.'}

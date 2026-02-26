@@ -104,7 +104,7 @@ export default function RoomDetailPage() {
     return (
       <div className="min-h-screen bg-white">
         <Navigation variant="solid" />
-        <div className="mt-[90px] flex items-center justify-center h-[60vh]">
+        <div className="mt-[70px] sm:mt-[90px] flex items-center justify-center h-[60vh]">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#873260]"></div>
         </div>
       </div>
@@ -115,7 +115,7 @@ export default function RoomDetailPage() {
     return (
       <div className="min-h-screen bg-white">
         <Navigation variant="solid" />
-        <div className="mt-[90px] flex flex-col items-center justify-center h-[60vh] px-4">
+        <div className="mt-[70px] sm:mt-[90px] flex flex-col items-center justify-center h-[60vh] px-4">
           <h1 className="text-[36px] font-serif text-[#111111] mb-4">Room Not Found</h1>
           <p className="text-[15px] text-[#32373c] font-light mb-8">The room you are looking for does not exist.</p>
           <Link href="/rooms" className="inline-block bg-[#111111] hover:bg-[#333333] text-white px-8 py-3.5 rounded-sm transition-colors text-[12px] font-medium tracking-[0.15em] uppercase">
@@ -131,7 +131,7 @@ export default function RoomDetailPage() {
       <Navigation variant="solid" />
 
       {/* Hero Image Gallery */}
-      <section className="relative h-[55vh] md:h-[70vh] mt-[90px] overflow-hidden group">
+      <section className="relative h-[55vh] md:h-[70vh] mt-[70px] sm:mt-[90px] overflow-hidden group">
         <Image
           src={room.images[imageIndex] || room.images[0]}
           alt={room.name}

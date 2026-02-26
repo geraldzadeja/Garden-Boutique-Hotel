@@ -44,7 +44,7 @@ export default function Navigation({ variant = 'transparent', hideBookNow = fals
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isTransparent ? '' : 'bg-white shadow-sm'}`}>
-      <div className={`flex justify-between items-center ${isTransparent ? 'px-6 md:px-10 py-6 md:py-8' : 'px-6 md:px-10 py-5 min-h-[90px]'}`}>
+      <div className={`flex justify-between items-center ${isTransparent ? 'px-4 sm:px-6 md:px-10 py-4 sm:py-6 md:py-8' : 'px-4 sm:px-6 md:px-10 py-3 sm:py-5 min-h-[70px] sm:min-h-[90px]'}`}>
         {/* Left - Menu Button with Burger/X transition */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
@@ -55,7 +55,7 @@ export default function Navigation({ variant = 'transparent', hideBookNow = fals
             <span className={`block absolute w-8 h-[2px] transition-all duration-300 ease-in-out ${isTransparent ? 'bg-white' : 'bg-[#111111]'} ${menuOpen ? 'rotate-45 top-1/2 -translate-y-1/2 !bg-white' : 'top-0'}`}></span>
             <span className={`block absolute w-8 h-[2px] transition-all duration-300 ease-in-out ${isTransparent ? 'bg-white' : 'bg-[#111111]'} ${menuOpen ? '-rotate-45 top-1/2 -translate-y-1/2 !bg-white' : 'bottom-0'}`}></span>
           </div>
-          <span className={`text-base tracking-[0.2em] font-medium transition-opacity duration-300 ${isTransparent ? 'text-white' : 'text-[#111111]'} ${menuOpen ? 'opacity-0' : 'opacity-100'}`}>MENU</span>
+          <span className={`hidden sm:inline text-base tracking-[0.2em] font-medium transition-opacity duration-300 ${isTransparent ? 'text-white' : 'text-[#111111]'} ${menuOpen ? 'opacity-0' : 'opacity-100'}`}>MENU</span>
         </button>
 
         {/* Center - Logo (solid variant only) */}
@@ -66,7 +66,7 @@ export default function Navigation({ variant = 'transparent', hideBookNow = fals
               alt={APP_NAME}
               width={200}
               height={70}
-              className="h-14 w-auto object-contain brightness-0"
+              className="h-10 sm:h-14 w-auto object-contain brightness-0"
               priority
             />
           </Link>
@@ -77,8 +77,8 @@ export default function Navigation({ variant = 'transparent', hideBookNow = fals
           <Link
             href="/availability"
             className={isTransparent
-              ? 'text-white text-sm tracking-[0.2em] font-medium px-6 py-2.5 border border-white/50 hover:bg-white/15 hover:backdrop-blur-md transition-all duration-300'
-              : 'text-[#111111] text-sm tracking-[0.2em] font-medium px-6 py-2.5 border border-[#111111]/50 hover:bg-[#111111]/10 transition-all duration-300'
+              ? 'text-white text-[11px] sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] font-medium px-3 sm:px-6 py-2 sm:py-2.5 border border-white/50 hover:bg-white/15 hover:backdrop-blur-md transition-all duration-300'
+              : 'text-[#111111] text-[11px] sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] font-medium px-3 sm:px-6 py-2 sm:py-2.5 border border-[#111111]/50 hover:bg-[#111111]/10 transition-all duration-300'
             }
           >
             BOOK NOW

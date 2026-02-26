@@ -99,7 +99,7 @@ export default function CustomDatePicker({
     const weeks: React.ReactNode[] = [];
 
     for (let i = 1; i < firstDay; i++) {
-      days.push(<td key={`empty-${i}`} className="p-0.5"></td>);
+      days.push(<td key={`empty-${i}`} className="p-1 sm:p-0.5"></td>);
     }
 
     for (let day = 1; day <= daysInMonth; day++) {
@@ -109,12 +109,12 @@ export default function CustomDatePicker({
       const highlighted = isHighlighted(date);
 
       days.push(
-        <td key={day} className="p-0.5">
+        <td key={day} className="p-1 sm:p-0.5">
           <button
             type="button"
             onClick={() => handleDateClick(day)}
             disabled={disabled}
-            className={`w-6 h-6 rounded-full text-[11px] font-medium transition-all
+            className={`w-10 h-10 sm:w-6 sm:h-6 rounded-full text-[15px] sm:text-[11px] font-medium transition-all
               ${disabled ? 'text-gray-300 cursor-not-allowed' : 'hover:bg-gray-100 cursor-pointer'}
               ${selected ? 'bg-[#111111] text-white' : ''}
               ${highlighted && !selected ? 'bg-[#333333] text-white' : ''}
@@ -131,7 +131,7 @@ export default function CustomDatePicker({
           const remaining = 7 - (days.length % 7);
           if (remaining < 7) {
             for (let i = 0; i < remaining; i++) {
-              days.push(<td key={`empty-end-${i}`} className="p-0.5"></td>);
+              days.push(<td key={`empty-end-${i}`} className="p-1 sm:p-0.5"></td>);
             }
           }
         }
@@ -189,25 +189,27 @@ export default function CustomDatePicker({
       {/* Calendar Popup */}
       {isOpen && (
         <>
+          {/* Mobile backdrop */}
+          <div className="sm:hidden fixed inset-0 bg-black/40 z-40" onClick={() => setIsOpen(false)} />
           {/* Calendar */}
           <div ref={calendarRef} className={`fixed sm:absolute left-0 right-0 sm:right-auto sm:left-0 bg-white sm:rounded-md shadow-2xl w-full overflow-hidden animate-[scaleIn_0.15s_ease-out] ${variant === 'dark' ? 'z-50 sm:w-[220px] bottom-0 sm:bottom-full sm:mb-2 rounded-t-xl' : variant === 'admin' ? 'z-[60] sm:w-[220px] sm:left-0 top-0 sm:top-full sm:mt-1 rounded-xl' : 'z-50 bottom-0 sm:bottom-full sm:mb-1 rounded-t-xl'}`} style={{ transformOrigin: variant === 'admin' ? 'top center' : 'bottom center' }}>
             {/* Header */}
-            <div className="bg-[#111111] px-2.5 py-1.5 flex items-center justify-center rounded-t-md">
-              <span className="text-white font-medium text-[11px] tracking-wide">Date Selector</span>
+            <div className="bg-[#111111] px-4 py-3 sm:px-2.5 sm:py-1.5 flex items-center justify-center rounded-t-md">
+              <span className="text-white font-medium text-[14px] sm:text-[11px] tracking-wide">Date Selector</span>
             </div>
 
             {/* Calendar Grid */}
-            <div className="p-1.5">
+            <div className="p-4 sm:p-1.5">
               <table className="w-full">
                 <thead>
-                  <tr className="text-gray-400 text-[9px] font-semibold">
-                    <th className="p-0.5">M</th>
-                    <th className="p-0.5">T</th>
-                    <th className="p-0.5">W</th>
-                    <th className="p-0.5">T</th>
-                    <th className="p-0.5">F</th>
-                    <th className="p-0.5">S</th>
-                    <th className="p-0.5">S</th>
+                  <tr className="text-gray-400 text-[13px] sm:text-[9px] font-semibold">
+                    <th className="p-1 sm:p-0.5">M</th>
+                    <th className="p-1 sm:p-0.5">T</th>
+                    <th className="p-1 sm:p-0.5">W</th>
+                    <th className="p-1 sm:p-0.5">T</th>
+                    <th className="p-1 sm:p-0.5">F</th>
+                    <th className="p-1 sm:p-0.5">S</th>
+                    <th className="p-1 sm:p-0.5">S</th>
                   </tr>
                 </thead>
                 <tbody>{renderCalendar()}</tbody>
@@ -215,23 +217,23 @@ export default function CustomDatePicker({
             </div>
 
             {/* Month Navigation - arrows + month name */}
-            <div className="border-t border-gray-100 px-2.5 py-1.5 flex items-center justify-between rounded-b-md">
+            <div className="border-t border-gray-100 px-4 py-3 sm:px-2.5 sm:py-1.5 flex items-center justify-between rounded-b-md">
               <button
                 type="button"
                 onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1))}
-                className="text-black hover:text-black/70 p-0.5 transition-colors"
+                className="text-black hover:text-black/70 p-1 sm:p-0.5 transition-colors"
               >
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-3 sm:h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
-              <span className="text-black text-[11px] font-medium">{months[currentMonth.getMonth()]}</span>
+              <span className="text-black text-[14px] sm:text-[11px] font-medium">{months[currentMonth.getMonth()]}</span>
               <button
                 type="button"
                 onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1))}
-                className="text-black hover:text-black/70 p-0.5 transition-colors"
+                className="text-black hover:text-black/70 p-1 sm:p-0.5 transition-colors"
               >
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-3 sm:h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </button>

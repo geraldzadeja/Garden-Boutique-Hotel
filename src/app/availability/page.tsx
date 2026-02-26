@@ -200,7 +200,7 @@ function AvailabilityContent() {
       <Navigation variant="solid" hideBookNow />
 
       {/* Hero Header */}
-      <section className="relative py-16 md:py-20 mt-[90px] overflow-hidden">
+      <section className="relative py-16 md:py-20 mt-[70px] sm:mt-[90px] overflow-hidden">
         {/* Background Video */}
         <video
           autoPlay
@@ -225,7 +225,7 @@ function AvailabilityContent() {
       </section>
 
       {/* Search Controls */}
-      <div className="bg-white border-b border-[#e5e5e5] py-6 px-4 sticky top-[90px] z-40 shadow-sm">
+      <div className="bg-white border-b border-[#e5e5e5] py-4 sm:py-6 px-4 sticky top-[70px] sm:top-[90px] z-40 shadow-sm">
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Check-in Input */}
@@ -318,7 +318,7 @@ function AvailabilityContent() {
                     >
                       <div className="grid grid-cols-1 md:grid-cols-5">
                         {/* Room Image Carousel */}
-                        <div className="relative h-[220px] md:h-full md:col-span-2 overflow-hidden group">
+                        <div className="relative h-[180px] sm:h-[220px] md:h-full md:col-span-2 overflow-hidden group">
                           <Image
                             src={room.images[cardImageIndex[room.id] || 0] || room.images[0]}
                             alt={room.name}
@@ -354,7 +354,7 @@ function AvailabilityContent() {
                         </div>
 
                         {/* Room Details */}
-                        <div className="md:col-span-3 p-6 flex flex-col">
+                        <div className="md:col-span-3 p-4 sm:p-6 flex flex-col">
                           <div className="mb-4">
                             <p className="text-[9px] text-[#873260] tracking-[0.2em] uppercase mb-1.5 font-medium">{room.bedType}</p>
                             <h3 className="text-[22px] font-serif text-[#111111] leading-tight">{room.name}</h3>
@@ -376,29 +376,32 @@ function AvailabilityContent() {
                             </div>
                           </div>
 
-                          <p className="text-[13px] text-[#32373c] font-light leading-[1.7] mb-5 line-clamp-2">{room.description}</p>
+                          <p className="hidden sm:block text-[13px] text-[#32373c] font-light leading-[1.7] mb-5 line-clamp-2">{room.description}</p>
 
                           {/* Quantity Controls */}
-                          <div className="flex items-center justify-end mt-auto gap-3" onClick={(e) => e.stopPropagation()}>
-                            <button
-                              type="button"
-                              onClick={() => updateQuantity(room.id, quantity - 1)}
-                              disabled={quantity <= 0}
-                              className="w-10 h-10 flex items-center justify-center rounded-sm bg-[#f5f5f0] hover:bg-[#e8e8e0] text-[#111111] font-medium text-xl transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-                            >
-                              −
-                            </button>
-                            <div className="w-12 text-center">
-                              <span className="text-[#111111] font-serif text-[24px]">{quantity}</span>
+                          <div className="flex items-center justify-between sm:justify-end mt-auto gap-3 pt-3 sm:pt-0 border-t sm:border-t-0 border-[#e5e5e5]" onClick={(e) => e.stopPropagation()}>
+                            <span className="sm:hidden text-[12px] text-[#873260] tracking-[0.15em] uppercase font-medium">Select Rooms</span>
+                            <div className="flex items-center gap-3">
+                              <button
+                                type="button"
+                                onClick={() => updateQuantity(room.id, quantity - 1)}
+                                disabled={quantity <= 0}
+                                className="w-11 h-11 sm:w-10 sm:h-10 flex items-center justify-center rounded-sm bg-[#f5f5f0] hover:bg-[#e8e8e0] text-[#111111] font-medium text-xl transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                              >
+                                −
+                              </button>
+                              <div className="w-10 sm:w-12 text-center">
+                                <span className="text-[#111111] font-serif text-[22px] sm:text-[24px]">{quantity}</span>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => updateQuantity(room.id, quantity + 1)}
+                                disabled={quantity >= room.maxAvailableQuantity}
+                                className="w-11 h-11 sm:w-10 sm:h-10 flex items-center justify-center rounded-sm bg-[#111111] hover:bg-[#333333] text-white font-medium text-xl transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                              >
+                                +
+                              </button>
                             </div>
-                            <button
-                              type="button"
-                              onClick={() => updateQuantity(room.id, quantity + 1)}
-                              disabled={quantity >= room.maxAvailableQuantity}
-                              className="w-10 h-10 flex items-center justify-center rounded-sm bg-[#111111] hover:bg-[#333333] text-white font-medium text-xl transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-                            >
-                              +
-                         </button>
                           </div>
                         </div>
                       </div>

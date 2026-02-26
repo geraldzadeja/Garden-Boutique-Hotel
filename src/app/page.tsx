@@ -193,9 +193,9 @@ export default function HomePage() {
         </div>
 
         {/* Booking Widget - Compact */}
-        <div className="absolute inset-0 flex items-end sm:items-center justify-center z-10 px-4 md:px-8 pb-8 sm:pb-0 sm:pt-32 md:pt-40">
+        <div className="absolute inset-0 flex items-end sm:items-center justify-center z-10 px-4 md:px-8 pb-6 sm:pb-0 sm:pt-32 md:pt-40">
           <form onSubmit={handleCheckAvailability} className="w-full max-w-4xl">
-            <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-2 sm:gap-3 lg:gap-5">
+            <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-1.5 sm:gap-3 lg:gap-5">
               {/* Arrival */}
               <CustomDatePicker
                 label="Arrival"
@@ -264,7 +264,7 @@ export default function HomePage() {
               {/* Find Room Button */}
               <button
                 type="submit"
-                className="mt-1 lg:mt-0 px-5 sm:px-6 py-2 sm:py-2.5 border border-white/60 text-white text-sm sm:text-base font-light hover:bg-white hover:text-gray-900 transition-all duration-300 whitespace-nowrap"
+                className="mt-1 lg:mt-0 w-full lg:w-auto px-5 sm:px-6 py-3 sm:py-2.5 border border-white/60 text-white text-sm sm:text-base font-light hover:bg-white hover:text-gray-900 transition-all duration-300 whitespace-nowrap"
               >
                 Find room
               </button>
@@ -473,8 +473,8 @@ export default function HomePage() {
           <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-12 transition-all duration-700 ${amenitiesSection.isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
             {/* Amenity 1 */}
             <div className="text-center group">
-              <div className="w-20 h-20 mx-auto mb-6 bg-[#873260]/10 rounded-full flex items-center justify-center group-hover:bg-[#873260] transition-colors duration-300">
-                <svg className="w-10 h-10 text-[#873260] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 bg-[#873260]/10 rounded-full flex items-center justify-center group-hover:bg-[#873260] transition-colors duration-300">
+                <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#873260] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
                 </svg>
               </div>
@@ -484,8 +484,8 @@ export default function HomePage() {
 
             {/* Amenity 2 */}
             <div className="text-center group">
-              <div className="w-20 h-20 mx-auto mb-6 bg-[#873260]/10 rounded-full flex items-center justify-center group-hover:bg-[#873260] transition-colors duration-300">
-                <svg className="w-10 h-10 text-[#873260] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 bg-[#873260]/10 rounded-full flex items-center justify-center group-hover:bg-[#873260] transition-colors duration-300">
+                <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#873260] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
@@ -495,8 +495,8 @@ export default function HomePage() {
 
             {/* Amenity 3 */}
             <div className="text-center group">
-              <div className="w-20 h-20 mx-auto mb-6 bg-[#873260]/10 rounded-full flex items-center justify-center group-hover:bg-[#873260] transition-colors duration-300">
-                <svg className="w-10 h-10 text-[#873260] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 bg-[#873260]/10 rounded-full flex items-center justify-center group-hover:bg-[#873260] transition-colors duration-300">
+                <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#873260] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z" />
                 </svg>
               </div>
@@ -506,8 +506,8 @@ export default function HomePage() {
 
             {/* Amenity 4 */}
             <div className="text-center group">
-              <div className="w-20 h-20 mx-auto mb-6 bg-[#873260]/10 rounded-full flex items-center justify-center group-hover:bg-[#873260] transition-colors duration-300">
-                <svg className="w-10 h-10 text-[#873260] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 bg-[#873260]/10 rounded-full flex items-center justify-center group-hover:bg-[#873260] transition-colors duration-300">
+                <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#873260] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
                 </svg>
               </div>
@@ -517,8 +517,8 @@ export default function HomePage() {
 
             {/* Amenity 5 */}
             <div className="text-center group">
-              <div className="w-20 h-20 mx-auto mb-6 bg-[#873260]/10 rounded-full flex items-center justify-center group-hover:bg-[#873260] transition-colors duration-300">
-                <svg className="w-10 h-10 text-[#873260] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 bg-[#873260]/10 rounded-full flex items-center justify-center group-hover:bg-[#873260] transition-colors duration-300">
+                <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#873260] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3l9 9m0 0l9-9M12 12v9m-4 0h8" />
                 </svg>
               </div>
@@ -589,10 +589,10 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                 <Link
                   href="/contact"
-                  className="inline-block bg-[#32373c] hover:bg-[#111111] text-white px-10 py-4 rounded-full transition-all duration-300 font-medium text-[15px] tracking-wide"
+                  className="inline-block bg-[#32373c] hover:bg-[#111111] text-white px-8 sm:px-10 py-3.5 sm:py-4 rounded-full transition-all duration-300 font-medium text-[14px] sm:text-[15px] tracking-wide text-center"
                 >
                   Contact Us
                 </Link>
@@ -600,7 +600,7 @@ export default function HomePage() {
                   href="https://www.google.com/maps/search/Garden+Boutique+Hotel+Elbasan+Albania"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block border-2 border-[#32373c] text-[#32373c] hover:bg-[#32373c] hover:text-white px-10 py-4 rounded-full transition-all duration-300 font-medium text-[15px] tracking-wide"
+                  className="inline-block border-2 border-[#32373c] text-[#32373c] hover:bg-[#32373c] hover:text-white px-8 sm:px-10 py-3.5 sm:py-4 rounded-full transition-all duration-300 font-medium text-[14px] sm:text-[15px] tracking-wide text-center"
                 >
                   Get Directions
                 </a>

@@ -306,7 +306,7 @@ function BookingContent() {
       <Navigation variant="solid" />
 
       {/* Hero Header */}
-      <section className="relative py-16 md:py-20 mt-[90px] overflow-hidden">
+      <section className="relative py-10 sm:py-16 md:py-20 mt-[70px] sm:mt-[90px] overflow-hidden">
         <video
           autoPlay
           muted
@@ -319,21 +319,21 @@ function BookingContent() {
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 max-w-4xl mx-auto text-center px-4">
           <p className="text-white/70 text-[11px] tracking-[0.4em] uppercase mb-4 font-medium">Final Step</p>
-          <h1 className="text-[42px] md:text-[52px] leading-[1.1] font-serif mb-6 text-white">
+          <h1 className="text-[32px] sm:text-[42px] md:text-[52px] leading-[1.1] font-serif mb-4 sm:mb-6 text-white">
             Complete Your Booking
           </h1>
-          <p className="text-[17px] text-white/70 max-w-xl mx-auto leading-[1.7] font-light">
+          <p className="hidden sm:block text-[17px] text-white/70 max-w-xl mx-auto leading-[1.7] font-light">
             Just a few more details and you're all set
           </p>
         </div>
       </section>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <div className="max-w-7xl mx-auto px-4 py-8 sm:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-10">
           {/* Booking Form - Left Side */}
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-sm border border-[#e5e5e5] p-8">
+          <div className="lg:col-span-2 order-2 lg:order-1">
+            <div className="bg-white rounded-sm border border-[#e5e5e5] p-5 sm:p-8">
               <h2 className="text-[20px] font-serif text-[#111111] mb-6">Guest Information</h2>
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
@@ -376,7 +376,7 @@ function BookingContent() {
                       <button
                         type="button"
                         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                        className="w-[120px] px-3 py-3.5 border border-[#e5e5e5] rounded-sm focus:outline-none focus:border-[#873260] transition-colors text-[14px] text-[#111111] bg-white cursor-pointer flex items-center justify-center gap-1.5"
+                        className="w-[100px] sm:w-[120px] px-2 sm:px-3 py-3.5 border border-[#e5e5e5] rounded-sm focus:outline-none focus:border-[#873260] transition-colors text-[13px] sm:text-[14px] text-[#111111] bg-white cursor-pointer flex items-center justify-center gap-1 sm:gap-1.5"
                       >
                         <span className={`fi fi-${countryCodes.find(c => c.code === countryCode)?.iso2} text-[18px] flex-shrink-0`}></span>
                         <span className="flex-1 text-center">{countryCode}</span>
@@ -395,7 +395,7 @@ function BookingContent() {
                           ></div>
 
                           {/* Dropdown Options */}
-                          <div className="absolute top-full left-0 mt-1 w-[200px] max-h-[300px] overflow-y-auto bg-white border border-[#e5e5e5] rounded-sm shadow-lg z-20">
+                          <div className="fixed sm:absolute bottom-0 sm:bottom-auto left-0 right-0 sm:right-auto sm:top-full sm:mt-1 w-full sm:w-[220px] max-h-[50vh] sm:max-h-[300px] overflow-y-auto bg-white border border-[#e5e5e5] rounded-t-xl sm:rounded-t-sm sm:rounded-sm shadow-lg z-20">
                             {countryCodes.map(({ code, country, iso2 }) => (
                               <button
                                 key={code}
@@ -468,9 +468,9 @@ function BookingContent() {
             </div>
           </div>
 
-          {/* Booking Summary - Right Side */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-sm border border-[#e5e5e5] p-6">
+          {/* Booking Summary - Right Side (shown first on mobile) */}
+          <div className="lg:col-span-1 order-1 lg:order-2">
+            <div className="bg-white rounded-sm border border-[#e5e5e5] p-5 sm:p-6">
               <h3 className="text-[20px] font-serif text-[#111111] mb-6">Booking Summary</h3>
 
               <div className="space-y-5">

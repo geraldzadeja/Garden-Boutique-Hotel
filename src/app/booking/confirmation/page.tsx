@@ -105,7 +105,7 @@ function ConfirmationContent() {
     return (
       <div className="min-h-screen bg-white">
         <Navigation variant="solid" />
-        <div className="mt-[90px] py-32 text-center">
+        <div className="mt-[70px] sm:mt-[90px] py-32 text-center">
           <div className="w-10 h-10 border-2 border-[#873260] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <p className="text-[#32373c] text-[15px] font-light">Loading your booking details...</p>
         </div>
@@ -118,7 +118,7 @@ function ConfirmationContent() {
     return (
       <div className="min-h-screen bg-white">
         <Navigation variant="solid" />
-        <section className="mt-[90px] py-16 md:py-20 bg-[#111111]">
+        <section className="mt-[70px] sm:mt-[90px] py-16 md:py-20 bg-[#111111]">
           <div className="max-w-3xl mx-auto text-center px-4">
             <h1 className="text-[40px] md:text-[52px] leading-[1] font-serif text-white">Booking Not Found</h1>
           </div>
@@ -141,23 +141,23 @@ function ConfirmationContent() {
       <Navigation variant="solid" />
 
       {/* Header */}
-      <section className="mt-[90px] py-16 md:py-20 bg-[#111111]">
+      <section className="mt-[70px] sm:mt-[90px] py-10 sm:py-16 md:py-20 bg-[#111111]">
         <div className="max-w-3xl mx-auto text-center px-4">
-          <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6">
-            <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4 sm:mb-6">
+            <svg className="w-6 h-6 sm:w-8 sm:h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <p className="text-white/50 text-[10px] tracking-[0.35em] uppercase mb-4 font-medium">Booking Confirmed</p>
-          <h1 className="text-[40px] md:text-[52px] leading-[1] font-serif text-white">Thank You, {firstBooking.guestName.split(' ')[0]}</h1>
+          <p className="text-white/50 text-[10px] tracking-[0.35em] uppercase mb-3 sm:mb-4 font-medium">Booking Confirmed</p>
+          <h1 className="text-[30px] sm:text-[40px] md:text-[52px] leading-[1] font-serif text-white">Thank You, {firstBooking.guestName.split(' ')[0]}</h1>
         </div>
       </section>
 
       {/* Main Content */}
-      <div className="max-w-3xl mx-auto px-4 py-12 md:py-16">
+      <div className="max-w-3xl mx-auto px-4 py-8 sm:py-12 md:py-16">
 
         {/* Success Banner */}
-        <div className="bg-green-50 border border-green-200 rounded-sm p-5 flex items-start gap-4 mb-10">
+        <div className="bg-green-50 border border-green-200 rounded-sm p-4 sm:p-5 flex items-start gap-3 sm:gap-4 mb-8 sm:mb-10">
           <svg className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
@@ -168,9 +168,9 @@ function ConfirmationContent() {
         </div>
 
         {/* Booking Reference */}
-        <div className="bg-[#faf9f7] border border-[#e5e5e5] rounded-sm p-6 md:p-8 mb-8 text-center">
+        <div className="bg-[#faf9f7] border border-[#e5e5e5] rounded-sm p-5 sm:p-6 md:p-8 mb-6 sm:mb-8 text-center">
           <p className="text-[#873260] text-[10px] tracking-[0.35em] uppercase mb-3 font-medium">Reservation Reference</p>
-          <span className="text-[24px] md:text-[32px] font-mono font-semibold text-[#111111] tracking-wider">
+          <span className="text-[18px] sm:text-[24px] md:text-[32px] font-mono font-semibold text-[#111111] tracking-wider break-all sm:break-normal">
             {firstBooking.reservationGroupId || firstBooking.bookingNumber}
           </span>
           <button
@@ -186,11 +186,11 @@ function ConfirmationContent() {
         </div>
 
         {/* Booking Summary */}
-        <div className="border border-[#e5e5e5] rounded-sm overflow-hidden mb-8">
-          <div className="bg-[#faf9f7] px-6 md:px-8 py-4 border-b border-[#e5e5e5]">
+        <div className="border border-[#e5e5e5] rounded-sm overflow-hidden mb-6 sm:mb-8">
+          <div className="bg-[#faf9f7] px-4 sm:px-6 md:px-8 py-3 sm:py-4 border-b border-[#e5e5e5]">
             <h2 className="text-[18px] font-serif text-[#111111]">Booking Summary</h2>
           </div>
-          <div className="px-6 md:px-8 py-6 space-y-5">
+          <div className="px-4 sm:px-6 md:px-8 py-5 sm:py-6 space-y-4 sm:space-y-5">
             {/* Status */}
             <div className="flex justify-between items-center">
               <span className="text-[13px] text-[#999] font-light uppercase tracking-wider">Status</span>
@@ -273,12 +273,12 @@ function ConfirmationContent() {
         </div>
 
         {/* What Happens Next */}
-        <div className="border border-[#e5e5e5] rounded-sm overflow-hidden mb-8">
-          <div className="bg-[#faf9f7] px-6 md:px-8 py-4 border-b border-[#e5e5e5]">
+        <div className="border border-[#e5e5e5] rounded-sm overflow-hidden mb-6 sm:mb-8">
+          <div className="bg-[#faf9f7] px-4 sm:px-6 md:px-8 py-3 sm:py-4 border-b border-[#e5e5e5]">
             <h2 className="text-[18px] font-serif text-[#111111]">What Happens Next</h2>
           </div>
-          <div className="px-6 md:px-8 py-6">
-            <div className="space-y-6">
+          <div className="px-4 sm:px-6 md:px-8 py-5 sm:py-6">
+            <div className="space-y-5 sm:space-y-6">
               <div className="flex gap-4">
                 <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#873260]/10 flex items-center justify-center">
                   <span className="text-[13px] font-medium text-[#873260]">1</span>
@@ -311,7 +311,7 @@ function ConfirmationContent() {
         </div>
 
         {/* Contact Fallback */}
-        <div className="bg-[#faf9f7] border border-[#e5e5e5] rounded-sm p-6 md:p-8 mb-8">
+        <div className="bg-[#faf9f7] border border-[#e5e5e5] rounded-sm p-5 sm:p-6 md:p-8 mb-6 sm:mb-8">
           <p className="text-[14px] text-[#32373c] font-light leading-[1.8]">
             If you do not receive a confirmation email within 24 hours, please contact us directly:
           </p>
@@ -332,16 +332,16 @@ function ConfirmationContent() {
         </div>
 
         {/* Actions */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
           <Link
             href="/my-booking"
-            className="px-8 py-3.5 bg-[#111111] text-white text-[12px] font-medium tracking-[0.15em] uppercase rounded-sm hover:bg-[#333] transition-colors text-center"
+            className="px-6 sm:px-8 py-3.5 bg-[#111111] text-white text-[12px] font-medium tracking-[0.15em] uppercase rounded-sm hover:bg-[#333] transition-colors text-center"
           >
             Manage My Booking
           </Link>
           <Link
             href="/"
-            className="px-8 py-3.5 border border-[#e5e5e5] text-[#111111] text-[12px] font-medium tracking-[0.15em] uppercase rounded-sm hover:bg-[#f5f5f5] transition-colors text-center"
+            className="px-6 sm:px-8 py-3.5 border border-[#e5e5e5] text-[#111111] text-[12px] font-medium tracking-[0.15em] uppercase rounded-sm hover:bg-[#f5f5f5] transition-colors text-center"
           >
             Return to Homepage
           </Link>

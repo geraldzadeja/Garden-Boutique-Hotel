@@ -9,7 +9,7 @@ export default function TermsPage() {
       <Navigation variant="solid" />
 
       {/* Header */}
-      <section className="mt-[90px] py-16 md:py-20 bg-[#111111]">
+      <section className="mt-[70px] sm:mt-[90px] py-16 md:py-20 bg-[#111111]">
         <div className="max-w-3xl mx-auto text-center px-4">
           <p className="text-white/50 text-[10px] tracking-[0.35em] uppercase mb-4 font-medium">Legal</p>
           <h1 className="text-[40px] md:text-[52px] leading-[1] font-serif text-white">
