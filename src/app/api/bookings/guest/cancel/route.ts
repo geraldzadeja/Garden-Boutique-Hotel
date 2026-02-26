@@ -13,9 +13,18 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { bookingNumber, email } = cancelSchema.parse(body);
 
-    const booking = await prisma.booking.findUnique({
+    // Try direct booking number lookup first
+    let booking = await prisma.booking.findUnique({
       where: { bookingNumber },
     });
+
+    // If not found, try by reservationGroupId
+    if (!booking) {
+      booking = await prisma.booking.findFirst({
+        where: { reservationGroupId: bookingNumber },
+        orderBy: { createdAt: 'asc' },
+      });
+    }
 
     // Generic error to prevent enumeration
     if (!booking || booking.guestEmail.toLowerCase() !== email.toLowerCase()) {
@@ -33,18 +42,37 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Cancel the booking
-    const updated = await prisma.booking.update({
+    // Cancel all bookings in the group (or just the single booking)
+    const now = new Date();
+    if (booking.reservationGroupId) {
+      await prisma.booking.updateMany({
+        where: {
+          reservationGroupId: booking.reservationGroupId,
+          status: { in: ['PENDING', 'CONFIRMED'] },
+        },
+        data: {
+          status: 'CANCELLED',
+          cancelledAt: now,
+        },
+      });
+    } else {
+      await prisma.booking.update({
+        where: { id: booking.id },
+        data: {
+          status: 'CANCELLED',
+          cancelledAt: now,
+        },
+      });
+    }
+
+    // Fetch the updated booking to return
+    const updated = await prisma.booking.findUnique({
       where: { id: booking.id },
-      data: {
-        status: 'CANCELLED',
-        cancelledAt: new Date(),
-      },
       include: { room: { select: { name: true, slug: true, images: true, bedType: true, size: true } } },
     });
 
     // Strip admin-only fields
-    const { adminNotes, statusHistory, ...sanitized } = updated;
+    const { adminNotes, statusHistory, ...sanitized } = updated!;
 
     return NextResponse.json({ booking: sanitized });
   } catch (error) {

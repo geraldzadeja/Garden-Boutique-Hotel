@@ -37,7 +37,7 @@ interface Booking {
 
 function ConfirmationContent() {
   const searchParams = useSearchParams();
-  const bookingNumbers = searchParams.get('bookingNumbers')?.split(',') || [];
+  const ref = searchParams.get('ref') || searchParams.get('bookingNumbers')?.split(',')[0] || '';
   const email = searchParams.get('email') || '';
 
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -46,7 +46,7 @@ function ConfirmationContent() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    if (!bookingNumbers.length || !email) {
+    if (!ref || !email) {
       setError('Missing booking information.');
       setLoading(false);
       return;
@@ -57,7 +57,7 @@ function ConfirmationContent() {
         const response = await fetch('/api/bookings/guest', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ bookingNumber: bookingNumbers[0], email }),
+          body: JSON.stringify({ bookingNumber: ref, email }),
         });
 
         if (!response.ok) {
@@ -93,7 +93,7 @@ function ConfirmationContent() {
   };
 
   const copyReference = () => {
-    const refs = bookings.map(b => b.bookingNumber).join(', ');
+    const refs = bookings[0]?.reservationGroupId || bookings[0]?.bookingNumber || '';
     navigator.clipboard.writeText(refs);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -169,14 +169,10 @@ function ConfirmationContent() {
 
         {/* Booking Reference */}
         <div className="bg-[#faf9f7] border border-[#e5e5e5] rounded-sm p-6 md:p-8 mb-8 text-center">
-          <p className="text-[#873260] text-[10px] tracking-[0.35em] uppercase mb-3 font-medium">Booking Reference</p>
-          <div className="flex items-center justify-center gap-3 flex-wrap">
-            {bookings.map((b) => (
-              <span key={b.id} className="text-[24px] md:text-[32px] font-mono font-semibold text-[#111111] tracking-wider">
-                {b.bookingNumber}
-              </span>
-            ))}
-          </div>
+          <p className="text-[#873260] text-[10px] tracking-[0.35em] uppercase mb-3 font-medium">Reservation Reference</p>
+          <span className="text-[24px] md:text-[32px] font-mono font-semibold text-[#111111] tracking-wider">
+            {firstBooking.reservationGroupId || firstBooking.bookingNumber}
+          </span>
           <button
             onClick={copyReference}
             className="mt-4 inline-flex items-center gap-2 text-[12px] text-[#873260] hover:text-[#6b2750] font-medium tracking-[0.1em] uppercase transition-colors"

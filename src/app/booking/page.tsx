@@ -180,8 +180,9 @@ function BookingContent() {
     setIsSubmitting(true);
 
     try {
-      // Generate a unique group ID for this reservation (all rooms booked together)
-      const reservationGroupId = `RES-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      // Generate a single reservation reference for the entire booking
+      const totalRoomCount = selectedRooms.reduce((sum, { quantity }) => sum + quantity, 0);
+      const needsGroup = totalRoomCount > 1;
 
       // Create bookings sequentially to avoid race conditions
       const bookingsToCreate = selectedRooms.flatMap(({ room, quantity }) =>
@@ -194,14 +195,20 @@ function BookingContent() {
           guestEmail: formData.email,
           guestPhone: `${countryCode} ${formData.phone}`,
           specialRequests: formData.specialRequests,
-          reservationGroupId, // Same group ID for all rooms in this reservation
         }))
       );
 
       const createdBookings = [];
+      let reservationRef = '';
 
       // Create bookings one by one sequentially
-      for (const bookingData of bookingsToCreate) {
+      for (let i = 0; i < bookingsToCreate.length; i++) {
+        const bookingData = {
+          ...bookingsToCreate[i],
+          // For multi-room: use the first booking's number as the group ID
+          reservationGroupId: needsGroup ? (reservationRef || '__FIRST__') : undefined,
+        };
+
         const response = await fetch('/api/bookings', {
           method: 'POST',
           headers: {
@@ -221,15 +228,18 @@ function BookingContent() {
         const booking = await response.json();
         createdBookings.push(booking);
 
+        // First booking's number becomes the reservation reference
+        if (i === 0) {
+          reservationRef = booking.bookingNumber;
+        }
+
         // Small delay to ensure unique timestamps
         await new Promise(resolve => setTimeout(resolve, 100));
       }
 
-      console.log(`Successfully created ${createdBookings.length} bookings with group ID: ${reservationGroupId}`);
-
-      // Redirect to confirmation page with booking references
-      const bookingNumbers = createdBookings.map((b: any) => b.bookingNumber).join(',');
-      router.push(`/booking/confirmation?bookingNumbers=${encodeURIComponent(bookingNumbers)}&email=${encodeURIComponent(formData.email)}`);
+      // The user-facing reference is always the first booking's number
+      // For multi-room, all bookings share this as reservationGroupId
+      router.push(`/booking/confirmation?ref=${encodeURIComponent(reservationRef)}&email=${encodeURIComponent(formData.email)}`);
     } catch (error) {
       console.error('Error creating booking:', error);
       alert('An error occurred while creating your booking. Please try again.');

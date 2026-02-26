@@ -13,11 +13,21 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { bookingNumber, email } = guestLookupSchema.parse(body);
 
-    // Find booking by reference number
-    const booking = await prisma.booking.findUnique({
+    // First try direct booking number lookup
+    let booking = await prisma.booking.findUnique({
       where: { bookingNumber },
       include: { room: { select: { name: true, slug: true, images: true, bedType: true, size: true } } },
     });
+
+    // If not found, try searching by reservationGroupId (multi-room bookings use
+    // the first booking's number as the group reference shown to the guest)
+    if (!booking) {
+      booking = await prisma.booking.findFirst({
+        where: { reservationGroupId: bookingNumber },
+        include: { room: { select: { name: true, slug: true, images: true, bedType: true, size: true } } },
+        orderBy: { createdAt: 'asc' },
+      });
+    }
 
     // Generic error for both "not found" and "wrong email" to prevent enumeration
     if (!booking || booking.guestEmail.toLowerCase() !== email.toLowerCase()) {

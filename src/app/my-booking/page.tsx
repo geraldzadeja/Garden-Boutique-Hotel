@@ -98,13 +98,13 @@ export default function MyBookingPage() {
       }
 
       const data = await response.json();
-      // Update the booking in our local state
+      // Update all bookings in local state (entire reservation gets cancelled)
       setBookings(prev =>
-        prev?.map(b =>
-          b.bookingNumber === bookingNumber
-            ? { ...b, status: data.booking.status, cancelledAt: data.booking.cancelledAt }
-            : b
-        ) || null
+        prev?.map(b => ({
+          ...b,
+          status: 'CANCELLED',
+          cancelledAt: data.booking.cancelledAt,
+        })) || null
       );
       setShowCancelModal(null);
     } catch {
@@ -201,7 +201,13 @@ export default function MyBookingPage() {
         )}
 
         {/* Booking Details */}
-        {bookings && bookings.length > 0 && (
+        {bookings && bookings.length > 0 && (() => {
+          const firstBooking = bookings[0];
+          const reservationRef = firstBooking.reservationGroupId || firstBooking.bookingNumber;
+          const overallStatus = statusConfig[firstBooking.status] || statusConfig.PENDING;
+          const grandTotal = bookings.reduce((sum, b) => sum + Number(b.totalPrice), 0);
+
+          return (
           <div>
             {/* Back button */}
             <button
@@ -214,101 +220,98 @@ export default function MyBookingPage() {
               New Search
             </button>
 
-            {bookings.map((booking) => {
-              const status = statusConfig[booking.status] || statusConfig.PENDING;
-
-              return (
-                <div key={booking.id} className="border border-[#e5e5e5] rounded-sm overflow-hidden mb-6">
-                  {/* Booking Header */}
-                  <div className="bg-[#faf9f7] px-6 md:px-8 py-5 border-b border-[#e5e5e5] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div>
-                      <p className="text-[10px] text-[#999] tracking-[0.2em] uppercase font-medium mb-1">Reference</p>
-                      <p className="text-[18px] font-mono font-semibold text-[#111111] tracking-wider">{booking.bookingNumber}</p>
-                    </div>
-                    <span className={`inline-flex items-center self-start px-3 py-1.5 rounded-full text-[11px] font-medium tracking-wide uppercase ${status.bg} ${status.text} border ${status.border}`}>
-                      {status.label}
-                    </span>
-                  </div>
-
-                  {/* Booking Details */}
-                  <div className="px-6 md:px-8 py-6 space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <p className="text-[11px] text-[#999] tracking-[0.15em] uppercase font-medium mb-1">Room</p>
-                        <p className="text-[15px] text-[#111111]">{booking.room.name}</p>
-                        <p className="text-[13px] text-[#999] font-light">{booking.room.bedType} &middot; {booking.room.size}m&sup2;</p>
-                      </div>
-                      <div>
-                        <p className="text-[11px] text-[#999] tracking-[0.15em] uppercase font-medium mb-1">Guests</p>
-                        <p className="text-[15px] text-[#111111]">{booking.numberOfGuests} guest{booking.numberOfGuests > 1 ? 's' : ''}</p>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <p className="text-[11px] text-[#999] tracking-[0.15em] uppercase font-medium mb-1">Check-in</p>
-                        <p className="text-[15px] text-[#111111]">{formatDate(booking.checkInDate)}</p>
-                      </div>
-                      <div>
-                        <p className="text-[11px] text-[#999] tracking-[0.15em] uppercase font-medium mb-1">Check-out</p>
-                        <p className="text-[15px] text-[#111111]">{formatDate(booking.checkOutDate)}</p>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <p className="text-[11px] text-[#999] tracking-[0.15em] uppercase font-medium mb-1">Duration</p>
-                        <p className="text-[15px] text-[#111111]">{booking.numberOfNights} night{booking.numberOfNights > 1 ? 's' : ''}</p>
-                      </div>
-                      <div>
-                        <p className="text-[11px] text-[#999] tracking-[0.15em] uppercase font-medium mb-1">Price per Night</p>
-                        <p className="text-[15px] text-[#111111]">{formatPrice(booking.pricePerNight)}</p>
-                      </div>
-                    </div>
-
-                    {booking.specialRequests && (
-                      <div>
-                        <p className="text-[11px] text-[#999] tracking-[0.15em] uppercase font-medium mb-1">Special Requests</p>
-                        <p className="text-[14px] text-[#32373c] font-light">{booking.specialRequests}</p>
-                      </div>
-                    )}
-
-                    <div className="border-t border-[#e5e5e5] pt-4 flex justify-between items-center">
-                      <span className="text-[15px] font-medium text-[#111111]">Total</span>
-                      <span className="text-[20px] font-serif text-[#111111]">{formatPrice(booking.totalPrice)}</span>
-                    </div>
-
-                    {booking.status === 'CANCELLED' && booking.cancelledAt && (
-                      <p className="text-[13px] text-red-600 font-light">
-                        Cancelled on {formatDate(booking.cancelledAt)}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Cancel Action */}
-                  {canCancel(booking.status) && (
-                    <div className="px-6 md:px-8 py-4 border-t border-[#e5e5e5] bg-[#faf9f7]">
-                      <button
-                        onClick={() => setShowCancelModal(booking.bookingNumber)}
-                        className="text-[12px] text-red-600 hover:text-red-700 font-medium tracking-[0.1em] uppercase transition-colors"
-                      >
-                        Cancel This Booking
-                      </button>
-                    </div>
-                  )}
+            <div className="border border-[#e5e5e5] rounded-sm overflow-hidden mb-6">
+              {/* Reservation Header */}
+              <div className="bg-[#faf9f7] px-6 md:px-8 py-5 border-b border-[#e5e5e5] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <p className="text-[10px] text-[#999] tracking-[0.2em] uppercase font-medium mb-1">Reservation Reference</p>
+                  <p className="text-[18px] font-mono font-semibold text-[#111111] tracking-wider">{reservationRef}</p>
                 </div>
-              );
-            })}
-
-            {/* Grand Total for multi-room */}
-            {bookings.length > 1 && (
-              <div className="border border-[#e5e5e5] rounded-sm px-6 md:px-8 py-5 flex justify-between items-center bg-[#faf9f7] mb-6">
-                <span className="text-[15px] font-medium text-[#111111]">Grand Total ({bookings.length} rooms)</span>
-                <span className="text-[22px] font-serif text-[#111111]">
-                  {formatPrice(bookings.reduce((sum, b) => sum + Number(b.totalPrice), 0))}
+                <span className={`inline-flex items-center self-start px-3 py-1.5 rounded-full text-[11px] font-medium tracking-wide uppercase ${overallStatus.bg} ${overallStatus.text} border ${overallStatus.border}`}>
+                  {overallStatus.label}
                 </span>
               </div>
-            )}
+
+              {/* Reservation Details */}
+              <div className="px-6 md:px-8 py-6 space-y-4">
+                {/* Dates & Duration */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-[11px] text-[#999] tracking-[0.15em] uppercase font-medium mb-1">Check-in</p>
+                    <p className="text-[15px] text-[#111111]">{formatDate(firstBooking.checkInDate)}</p>
+                  </div>
+                  <div>
+                    <p className="text-[11px] text-[#999] tracking-[0.15em] uppercase font-medium mb-1">Check-out</p>
+                    <p className="text-[15px] text-[#111111]">{formatDate(firstBooking.checkOutDate)}</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-[11px] text-[#999] tracking-[0.15em] uppercase font-medium mb-1">Duration</p>
+                    <p className="text-[15px] text-[#111111]">{firstBooking.numberOfNights} night{firstBooking.numberOfNights > 1 ? 's' : ''}</p>
+                  </div>
+                  <div>
+                    <p className="text-[11px] text-[#999] tracking-[0.15em] uppercase font-medium mb-1">Guests</p>
+                    <p className="text-[15px] text-[#111111]">{firstBooking.numberOfGuests} guest{firstBooking.numberOfGuests > 1 ? 's' : ''}</p>
+                  </div>
+                </div>
+
+                {/* Rooms */}
+                <div>
+                  <p className="text-[11px] text-[#999] tracking-[0.15em] uppercase font-medium mb-2">Room{bookings.length > 1 ? 's' : ''}</p>
+                  <div className="space-y-2">
+                    {(() => {
+                      const grouped = bookings.reduce<Record<string, { room: BookingRoom; count: number; pricePerNight: string }>>((acc, b) => {
+                        const key = b.room.name;
+                        if (!acc[key]) acc[key] = { room: b.room, count: 0, pricePerNight: b.pricePerNight };
+                        acc[key].count++;
+                        return acc;
+                      }, {});
+                      return Object.entries(grouped).map(([name, { room, count, pricePerNight }]) => (
+                        <div key={name} className="flex justify-between items-center bg-[#faf9f7] rounded-sm px-4 py-3">
+                          <div>
+                            <p className="text-[15px] text-[#111111] font-medium">{count > 1 ? `${count}× ` : ''}{name}</p>
+                            <p className="text-[13px] text-[#999] font-light">{room.bedType} &middot; {room.size}m&sup2;</p>
+                          </div>
+                          <p className="text-[15px] text-[#111111]">{formatPrice(pricePerNight)} <span className="text-[12px] text-[#999] font-light">/ night</span></p>
+                        </div>
+                      ));
+                    })()}
+                  </div>
+                </div>
+
+                {firstBooking.specialRequests && (
+                  <div>
+                    <p className="text-[11px] text-[#999] tracking-[0.15em] uppercase font-medium mb-1">Special Requests</p>
+                    <p className="text-[14px] text-[#32373c] font-light">{firstBooking.specialRequests}</p>
+                  </div>
+                )}
+
+                <div className="border-t border-[#e5e5e5] pt-4 flex justify-between items-center">
+                  <span className="text-[15px] font-medium text-[#111111]">Total{bookings.length > 1 ? ` (${bookings.length} rooms)` : ''}</span>
+                  <span className="text-[20px] font-serif text-[#111111]">{formatPrice(grandTotal)}</span>
+                </div>
+
+                {firstBooking.status === 'CANCELLED' && firstBooking.cancelledAt && (
+                  <p className="text-[13px] text-red-600 font-light">
+                    Cancelled on {formatDate(firstBooking.cancelledAt)}
+                  </p>
+                )}
+              </div>
+
+              {/* Cancel Action */}
+              {bookings.some(b => canCancel(b.status)) && (
+                <div className="px-6 md:px-8 py-4 border-t border-[#e5e5e5] bg-[#faf9f7]">
+                  <button
+                    onClick={() => setShowCancelModal(firstBooking.bookingNumber)}
+                    className="text-[12px] text-red-600 hover:text-red-700 font-medium tracking-[0.1em] uppercase transition-colors"
+                  >
+                    Cancel Reservation
+                  </button>
+                </div>
+              )}
+            </div>
 
             {/* Help Text */}
             <div className="mt-8 text-center">
@@ -320,7 +323,8 @@ export default function MyBookingPage() {
               </p>
             </div>
           </div>
-        )}
+          );
+        })()}
 
         {/* No results after search */}
         {bookings && bookings.length === 0 && (
@@ -341,9 +345,10 @@ export default function MyBookingPage() {
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/50" onClick={() => !cancelling && setShowCancelModal(null)} />
           <div className="relative bg-white rounded-sm max-w-md w-full p-8 shadow-xl">
-            <h3 className="text-[20px] font-serif text-[#111111] mb-4">Cancel Booking</h3>
+            <h3 className="text-[20px] font-serif text-[#111111] mb-4">Cancel Reservation</h3>
             <p className="text-[14px] text-[#32373c] font-light leading-[1.7] mb-2">
-              Are you sure you want to cancel booking <strong className="font-medium font-mono">{showCancelModal}</strong>?
+              Are you sure you want to cancel reservation <strong className="font-medium font-mono">{showCancelModal}</strong>?
+              {bookings && bookings.length > 1 && ' This will cancel all rooms in this reservation.'}
             </p>
             <div className="bg-yellow-50 border border-yellow-200 rounded-sm p-4 mb-6">
               <p className="text-[13px] text-yellow-800 font-light leading-[1.7]">

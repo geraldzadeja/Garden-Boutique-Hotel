@@ -110,10 +110,12 @@ export async function POST(request: NextRequest) {
       );
 
       // Create booking inside the same transaction
+      const bookingNumber = await generateBookingNumber();
       return tx.booking.create({
         data: {
-          bookingNumber: await generateBookingNumber(),
-          reservationGroupId: validated.reservationGroupId,
+          bookingNumber,
+          // For the first booking in a group, use its own booking number as group ID
+          reservationGroupId: validated.reservationGroupId === '__FIRST__' ? bookingNumber : (validated.reservationGroupId || null),
           roomId: validated.roomId,
           checkInDate: validated.checkInDate,
           checkOutDate: validated.checkOutDate,
