@@ -1,0 +1,183 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Admin authentication
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         UserRole @default(ADMIN)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("users")
+}
+
+enum UserRole {
+  ADMIN
+}
+
+// Room types and inventory
+model Room {
+  id               String    @id @default(cuid())
+  name             String    @unique
+  slug             String    @unique
+  description      String    @db.Text
+  shortDescription String?
+  capacity         Int
+  bedType          String
+  size             Int // in sqm
+  pricePerNight    Decimal   @db.Decimal(10, 2)
+  amenities        String[] // Array of amenity IDs/names
+  images           String[] // Array of image URLs
+  isActive         Boolean   @default(true)
+  displayOrder     Int       @default(0)
+  totalUnits       Int       @default(1) // Total number of this room type available
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  bookings         Booking[]
+  blockedDates     RoomBlockedDate[]
+  availabilityOverrides RoomAvailabilityOverride[]
+
+  @@map("rooms")
+  @@index([slug])
+  @@index([isActive])
+}
+
+// Room availability overrides (for custom availability per date)
+model RoomAvailabilityOverride {
+  id              String   @id @default(cuid())
+  roomId          String
+  room            Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  date            DateTime @db.Date
+  availableUnits  Int      // Number of units available for this specific date
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("room_availability_overrides")
+  @@unique([roomId, date])
+  @@index([roomId, date])
+}
+
+// Room availability blocking (for occupied/blocked dates)
+model RoomBlockedDate {
+  id          String   @id @default(cuid())
+  roomId      String
+  room        Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  date        DateTime @db.Date
+  unitsBlocked Int     @default(1) // How many units are blocked for this date
+  reason      String?  // e.g., "Maintenance", "Personal Use", "Renovation"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("room_blocked_dates")
+  @@unique([roomId, date])
+  @@index([roomId, date])
+}
+
+// Booking requests
+model Booking {
+  id              String        @id @default(cuid())
+  bookingNumber   String        @unique
+  reservationGroupId String?    // Groups multiple rooms booked together
+
+  // Room and dates
+  roomId          String
+  room            Room          @relation(fields: [roomId], references: [id], onDelete: Restrict)
+  checkInDate     DateTime      @db.Date
+  checkOutDate    DateTime      @db.Date
+  numberOfNights  Int
+  numberOfGuests  Int
+
+  // Guest information
+  guestName       String
+  guestEmail      String
+  guestPhone      String
+  specialRequests String?       @db.Text
+
+  // Pricing
+  pricePerNight   Decimal       @db.Decimal(10, 2)
+  totalPrice      Decimal       @db.Decimal(10, 2)
+
+  // Status management
+  status          BookingStatus @default(PENDING)
+  statusHistory   Json?         // Track status changes
+
+  // Admin notes
+  adminNotes      String?       @db.Text
+
+  // Timestamps
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  confirmedAt     DateTime?
+  cancelledAt     DateTime?
+
+  @@map("bookings")
+  @@index([roomId])
+  @@index([status])
+  @@index([checkInDate, checkOutDate])
+  @@index([guestEmail])
+  @@index([reservationGroupId])
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  NO_SHOW
+}
+
+// Blog posts
+model BlogPost {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  excerpt     String?   @db.Text
+  content     String    @db.Text
+  coverImage  String?
+  tags        String[]
+  isPublished Boolean   @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("blog_posts")
+  @@index([slug])
+  @@index([isPublished, publishedAt])
+}
+
+// Newsletter subscriptions
+model NewsletterSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+
+  @@map("newsletter_subscribers")
+  @@index([email])
+}
+
+// Contact form submissions
+model ContactMessage {
+  id          String    @id @default(cuid())
+  name        String
+  email       String
+  phone       String?
+  subject     String?
+  message     String    @db.Text
+  isRead      Boolean   @default(false)
+  respondedAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@map("contact_messages")
+  @@index([isRead])
+  @@index([createdAt])
+}
