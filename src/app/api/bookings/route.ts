@@ -127,7 +127,8 @@ export async function POST(request: NextRequest) {
           specialRequests: validated.specialRequests,
           pricePerNight: room.pricePerNight,
           totalPrice,
-          status: 'PENDING',
+          status: 'CONFIRMED',
+          confirmedAt: new Date(),
         },
         include: { room: true },
       });

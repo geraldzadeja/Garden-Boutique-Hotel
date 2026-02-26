@@ -148,7 +148,7 @@ function ConfirmationContent() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <p className="text-white/50 text-[10px] tracking-[0.35em] uppercase mb-4 font-medium">Booking Received</p>
+          <p className="text-white/50 text-[10px] tracking-[0.35em] uppercase mb-4 font-medium">Booking Confirmed</p>
           <h1 className="text-[40px] md:text-[52px] leading-[1] font-serif text-white">Thank You, {firstBooking.guestName.split(' ')[0]}</h1>
         </div>
       </section>
@@ -162,8 +162,8 @@ function ConfirmationContent() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <div>
-            <p className="text-[15px] font-medium text-green-800 mb-1">Your booking request has been received</p>
-            <p className="text-[14px] text-green-700 font-light">We will review your reservation and send a confirmation to {firstBooking.guestEmail}</p>
+            <p className="text-[15px] font-medium text-green-800 mb-1">Your booking has been confirmed</p>
+            <p className="text-[14px] text-green-700 font-light">A confirmation will be sent to {firstBooking.guestEmail}</p>
           </div>
         </div>
 
@@ -194,8 +194,8 @@ function ConfirmationContent() {
             {/* Status */}
             <div className="flex justify-between items-center">
               <span className="text-[13px] text-[#999] font-light uppercase tracking-wider">Status</span>
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-medium tracking-wide uppercase bg-yellow-50 text-yellow-700 border border-yellow-200">
-                Pending Confirmation
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-medium tracking-wide uppercase bg-green-50 text-green-700 border border-green-200">
+                Confirmed
               </span>
             </div>
 
@@ -284,8 +284,8 @@ function ConfirmationContent() {
                   <span className="text-[13px] font-medium text-[#873260]">1</span>
                 </div>
                 <div>
-                  <p className="text-[15px] font-medium text-[#111111] mb-1">Room Reserved</p>
-                  <p className="text-[14px] text-[#32373c] font-light leading-[1.7]">Your selected room has been temporarily reserved. Availability is held to prevent double bookings.</p>
+                  <p className="text-[15px] font-medium text-[#111111] mb-1">Booking Confirmed</p>
+                  <p className="text-[14px] text-[#32373c] font-light leading-[1.7]">Your reservation has been confirmed and your room is secured.</p>
                 </div>
               </div>
               <div className="flex gap-4">
@@ -294,7 +294,7 @@ function ConfirmationContent() {
                 </div>
                 <div>
                   <p className="text-[15px] font-medium text-[#111111] mb-1">Confirmation Email</p>
-                  <p className="text-[14px] text-[#32373c] font-light leading-[1.7]">You will receive a confirmation email at <strong className="font-medium">{firstBooking.guestEmail}</strong> with your booking details and next steps.</p>
+                  <p className="text-[14px] text-[#32373c] font-light leading-[1.7]">You will receive a confirmation email at <strong className="font-medium">{firstBooking.guestEmail}</strong> with your booking details.</p>
                 </div>
               </div>
               <div className="flex gap-4">
@@ -302,8 +302,8 @@ function ConfirmationContent() {
                   <span className="text-[13px] font-medium text-[#873260]">3</span>
                 </div>
                 <div>
-                  <p className="text-[15px] font-medium text-[#111111] mb-1">Hotel Confirmation</p>
-                  <p className="text-[14px] text-[#32373c] font-light leading-[1.7]">Our team will review your reservation and confirm your booking. Payment is made in cash at the hotel reception upon check-in.</p>
+                  <p className="text-[15px] font-medium text-[#111111] mb-1">Payment at Check-in</p>
+                  <p className="text-[14px] text-[#32373c] font-light leading-[1.7]">Payment is made in cash at the hotel reception upon check-in.</p>
                 </div>
               </div>
             </div>

@@ -349,20 +349,15 @@ export default function AdminBookingsPage() {
               )}
 
               <div className="flex gap-2 pt-2">
-                {selectedReservation.status === 'PENDING' && (
+                {selectedReservation.status === 'CONFIRMED' && (
                   <>
-                    <Button size="sm" className="flex-1" onClick={() => handleStatusChange(selectedReservation, 'CONFIRMED')} disabled={actionLoading}>
-                      Confirm
-                    </Button>
                     <Button size="sm" variant="outline" className="flex-1 text-destructive" onClick={() => handleStatusChange(selectedReservation, 'CANCELLED')} disabled={actionLoading}>
                       Cancel
                     </Button>
+                    <Button size="sm" variant="outline" className="flex-1" onClick={() => handleStatusChange(selectedReservation, 'NO_SHOW')} disabled={actionLoading}>
+                      No Show
+                    </Button>
                   </>
-                )}
-                {selectedReservation.status === 'CONFIRMED' && (
-                  <Button size="sm" variant="outline" className="flex-1" onClick={() => handleStatusChange(selectedReservation, 'NO_SHOW')} disabled={actionLoading}>
-                    No Show
-                  </Button>
                 )}
               </div>
             </div>
