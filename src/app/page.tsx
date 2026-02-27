@@ -51,8 +51,8 @@ function useScrollAnimation() {
         }
       },
       {
-        threshold: 0.1, // Trigger when 10% of element is visible
-        rootMargin: '0px 0px -50px 0px', // Start animation slightly before element enters viewport
+        threshold: 0.05,
+        rootMargin: '0px 0px 150px 0px', // Trigger 150px before element enters viewport
       }
     );
 
@@ -360,7 +360,7 @@ export default function HomePage() {
       <section className="py-12 md:py-16 px-4 bg-white" ref={introSection.elementRef}>
         <div className="max-w-5xl mx-auto">
           {/* Centered Text Content */}
-          <div className={`text-center mb-12 transition-all duration-1000 ${introSection.isVisible ? 'opacity-100 translate-y-0' : 'sm:opacity-0 sm:translate-y-10'}`}>
+          <div className={`text-center mb-12 transition-all duration-1000 ${introSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <p className="text-[#873260] text-[11px] tracking-[0.4em] uppercase mb-6 font-medium">Welcome To</p>
             <h2 className="text-[28px] sm:text-[36px] md:text-[52px] leading-[1.1] font-serif mb-6 text-[#111111] px-4">
               Garden Boutique Hotel
@@ -373,7 +373,7 @@ export default function HomePage() {
           </div>
 
           {/* Horizontal Scrolling Gallery - Hotel Vienna Style */}
-          <div className={`relative transition-all duration-1000 ${introSection.isVisible ? 'opacity-100' : 'sm:opacity-0'}`}>
+          <div className={`relative transition-all duration-1000 ${introSection.isVisible ? 'opacity-100' : 'opacity-0'}`}>
             <div ref={carouselRef} className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4">
               {/* Image 1 */}
               <div className="relative flex-shrink-0 w-[280px] md:w-[320px] aspect-[9/16] snap-center overflow-hidden">
@@ -450,7 +450,7 @@ export default function HomePage() {
       {/* 3️⃣ ROOM HIGHLIGHTS SECTION */}
       <section className="py-16 md:py-20 px-4 bg-gray-50" ref={roomsSection.elementRef}>
         <div className="max-w-7xl mx-auto">
-          <div className={`text-center mb-12 transition-all duration-700 ${roomsSection.isVisible ? 'animate-fade-in-up' : 'sm:opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
+          <div className={`text-center mb-12 transition-all duration-700 ${roomsSection.isVisible ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
             <p className="text-[#873260] text-[11px] tracking-[0.4em] uppercase mb-6 font-medium">Accommodations</p>
             <h2 className="text-[28px] sm:text-[36px] md:text-[42px] leading-[1.2] font-serif mb-6 text-[#111111]">
               Our Rooms & Suites
@@ -460,7 +460,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 transition-all duration-700 ${roomsSection.isVisible ? 'animate-fade-in' : 'sm:opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
+          <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 transition-all duration-700 ${roomsSection.isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
             {roomsLoading ? (
               // Loading skeleton
               Array.from({ length: 4 }).map((_, index) => (
@@ -543,7 +543,7 @@ export default function HomePage() {
       {/* 4️⃣ AMENITIES / FACILITIES SECTION */}
       <section className="py-16 md:py-20 px-4 bg-white" ref={amenitiesSection.elementRef}>
         <div className="max-w-6xl mx-auto">
-          <div className={`text-center mb-14 transition-all duration-700 ${amenitiesSection.isVisible ? 'animate-fade-in-up' : 'sm:opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
+          <div className={`text-center mb-14 transition-all duration-700 ${amenitiesSection.isVisible ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
             <p className="text-[#873260] text-sm tracking-[0.2em] uppercase mb-4 font-medium">Hotel Amenities</p>
             <h2 className="text-[28px] sm:text-[36px] md:text-[42px] leading-[1.2] font-serif mb-6 text-[#111111]">
               Everything You Need
@@ -553,7 +553,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className={`flex flex-wrap justify-center gap-6 sm:grid sm:grid-cols-3 lg:grid-cols-5 sm:gap-8 lg:gap-12 transition-all duration-700 ${amenitiesSection.isVisible ? 'animate-fade-in' : 'sm:opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
+          <div className={`flex flex-wrap justify-center gap-6 sm:grid sm:grid-cols-3 lg:grid-cols-5 sm:gap-8 lg:gap-12 transition-all duration-700 ${amenitiesSection.isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
             {/* Amenity 1 */}
             <div className="text-center group w-[calc(50%-12px)] sm:w-auto">
               <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 bg-[#873260]/10 rounded-full flex items-center justify-center group-hover:bg-[#873260] transition-colors duration-300">
@@ -615,7 +615,7 @@ export default function HomePage() {
       {/* 5️⃣ TESTIMONIALS SECTION */}
       <section className="py-16 md:py-20 px-4 bg-white" ref={testimonialsSection.elementRef}>
         <div className="max-w-6xl mx-auto">
-          <div className={`text-center mb-14 transition-all duration-700 ${testimonialsSection.isVisible ? 'animate-fade-in-up' : 'sm:opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
+          <div className={`text-center mb-14 transition-all duration-700 ${testimonialsSection.isVisible ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
             <p className="text-[#873260] text-sm tracking-[0.2em] uppercase mb-4 font-medium">Testimonials</p>
             <h2 className="text-[28px] sm:text-[36px] md:text-[42px] leading-[1.2] font-serif mb-6 text-[#111111]">
               What Our Guests Say
@@ -623,7 +623,7 @@ export default function HomePage() {
             <p className="text-[17px] text-[#32373c] max-w-2xl mx-auto leading-relaxed">Hear from those who've experienced our hospitality</p>
           </div>
 
-          <div className={`transition-all duration-700 ${testimonialsSection.isVisible ? 'animate-fade-in' : 'sm:opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
+          <div className={`transition-all duration-700 ${testimonialsSection.isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
             <TestimonialsCarousel />
           </div>
         </div>
@@ -634,7 +634,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Text Column */}
-            <div className={`transition-all duration-700 ${locationSection.isVisible ? 'animate-slide-in-left' : 'sm:opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
+            <div className={`transition-all duration-700 ${locationSection.isVisible ? 'animate-slide-in-left' : 'opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
               <p className="text-[#873260] text-sm tracking-[0.2em] uppercase mb-4 font-medium">Location</p>
               <h2 className="text-[28px] sm:text-[36px] md:text-[42px] leading-[1.2] font-serif mb-8 text-[#111111]">
                 Find Us in the Heart of Elbasan
@@ -691,7 +691,7 @@ export default function HomePage() {
             </div>
 
             {/* Interactive Map */}
-            <div className={`h-[300px] sm:h-[400px] lg:h-[500px] overflow-hidden transition-all duration-700 ${locationSection.isVisible ? 'animate-slide-in-right' : 'sm:opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
+            <div className={`h-[300px] sm:h-[400px] lg:h-[500px] overflow-hidden transition-all duration-700 ${locationSection.isVisible ? 'animate-slide-in-right' : 'opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
               <Map
                 latitude={41.116990}
                 longitude={20.089142}
