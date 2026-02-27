@@ -177,19 +177,24 @@ export default function ContactPage() {
                     <label className="block text-[9px] text-[#873260] tracking-[0.2em] uppercase mb-2 font-medium">
                       Subject <span className="text-[#991b1b]">*</span>
                     </label>
-                    <select
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3.5 border border-[#e5e5e5] rounded-sm focus:outline-none focus:border-[#873260] transition-colors text-[14px] text-[#111111] bg-white"
-                    >
-                      <option value="">Select a subject</option>
-                      <option value="General Inquiry">General Inquiry</option>
-                      <option value="Reservation">Reservation</option>
-                      <option value="Feedback">Feedback</option>
-                      <option value="Other">Other</option>
-                    </select>
+                    <div className="relative">
+                      <select
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-4 py-3.5 border border-[#e5e5e5] rounded-sm focus:outline-none focus:border-[#873260] transition-colors text-[14px] text-[#111111] bg-white appearance-none pr-10"
+                      >
+                        <option value="">Select a subject</option>
+                        <option value="General Inquiry">General Inquiry</option>
+                        <option value="Reservation">Reservation</option>
+                        <option value="Feedback">Feedback</option>
+                        <option value="Other">Other</option>
+                      </select>
+                      <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#666] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
                   </div>
 
                   <div>
