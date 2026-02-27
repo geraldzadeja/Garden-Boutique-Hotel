@@ -44,7 +44,7 @@ export default function Navigation({ variant = 'transparent', hideBookNow = fals
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isTransparent ? '' : 'bg-white shadow-sm'}`}>
-      <div className={`flex justify-between items-center ${isTransparent ? 'px-4 sm:px-6 md:px-10 py-4 sm:py-6 md:py-8' : 'px-4 sm:px-6 md:px-10 py-3 sm:py-5 min-h-[70px] sm:min-h-[90px]'}`}>
+      <div className={`flex justify-between items-center ${isTransparent ? 'px-4 sm:px-6 md:px-10 py-6 sm:py-6 md:py-8' : 'px-4 sm:px-6 md:px-10 py-5 sm:py-5 min-h-[70px] sm:min-h-[90px]'}`}>
         {/* Left - Menu Button with Burger/X transition */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
@@ -88,27 +88,27 @@ export default function Navigation({ variant = 'transparent', hideBookNow = fals
 
       {/* Slide-out Menu */}
       <div className={`fixed top-0 left-0 h-full w-80 bg-white/10 backdrop-blur-xl shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-        <div className="p-8 pt-20">
-          {/* Menu Links */}
-          <nav className="space-y-0">
+        <div className="flex flex-col h-full px-8 pt-24 sm:pt-20 pb-8">
+          {/* Menu Links - fill available space with even distribution */}
+          <nav className="flex-1 flex flex-col justify-center gap-1">
             {NAV_LINKS.map((link, index) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className={`block py-3.5 text-[18px] text-white hover:text-[#d4a3c3] transition-colors font-light ${index < NAV_LINKS.length - 1 ? 'border-b border-white/20' : ''}`}
+                className={`block py-4 sm:py-3.5 text-[22px] sm:text-[18px] text-white hover:text-[#d4a3c3] transition-colors font-light tracking-wide ${index < NAV_LINKS.length - 1 ? 'border-b border-white/20' : ''}`}
               >
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          {/* Menu Footer */}
-          <div className="absolute bottom-8 left-8 right-8">
+          {/* Menu Footer - transparent blur button */}
+          <div className="mt-auto">
             <Link
               href="/availability"
               onClick={() => setMenuOpen(false)}
-              className="block w-full text-center bg-white/20 hover:bg-white/30 text-white py-4 text-sm tracking-[0.1em] transition-colors backdrop-blur-sm border border-white/30"
+              className="block w-full text-center bg-white/10 backdrop-blur-md hover:bg-white/20 text-white py-4 text-sm tracking-[0.15em] transition-all duration-300 border border-white/30"
             >
               BOOK NOW
             </Link>

@@ -193,18 +193,18 @@ export default function HomePage() {
         </div>
 
         {/* Mobile: Logo + Booking Widget centered together */}
-        <div className="sm:hidden absolute inset-0 flex flex-col items-center justify-center z-10 px-4 gap-6">
-          <div className="animate-fade-in" style={{ opacity: 0, animationFillMode: 'forwards' }}>
+        <div className="sm:hidden absolute inset-0 flex flex-col items-center justify-center z-10 px-4 gap-4">
+          <div className="animate-fade-in -mt-6" style={{ opacity: 0, animationFillMode: 'forwards' }}>
             <Image
               src="/garden-logo.png"
               alt={APP_NAME}
               width={600}
               height={210}
-              className="h-24 w-auto object-contain drop-shadow-2xl"
+              className="h-52 w-auto object-contain drop-shadow-2xl"
               priority
             />
           </div>
-          <form onSubmit={handleCheckAvailability} className="w-full max-w-4xl">
+          <form onSubmit={handleCheckAvailability} className="w-full max-w-4xl mt-2">
             <div className="flex flex-col items-stretch justify-between gap-1.5">
               <CustomDatePicker
                 label="Arrival"
@@ -553,9 +553,9 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-12 transition-all duration-700 ${amenitiesSection.isVisible ? 'animate-fade-in' : 'sm:opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
+          <div className={`flex flex-wrap justify-center gap-6 sm:grid sm:grid-cols-3 lg:grid-cols-5 sm:gap-8 lg:gap-12 transition-all duration-700 ${amenitiesSection.isVisible ? 'animate-fade-in' : 'sm:opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
             {/* Amenity 1 */}
-            <div className="text-center group">
+            <div className="text-center group w-[calc(50%-12px)] sm:w-auto">
               <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 bg-[#873260]/10 rounded-full flex items-center justify-center group-hover:bg-[#873260] transition-colors duration-300">
                 <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#873260] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
@@ -566,7 +566,7 @@ export default function HomePage() {
             </div>
 
             {/* Amenity 2 */}
-            <div className="text-center group">
+            <div className="text-center group w-[calc(50%-12px)] sm:w-auto">
               <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 bg-[#873260]/10 rounded-full flex items-center justify-center group-hover:bg-[#873260] transition-colors duration-300">
                 <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#873260] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -577,7 +577,7 @@ export default function HomePage() {
             </div>
 
             {/* Amenity 3 */}
-            <div className="text-center group">
+            <div className="text-center group w-[calc(50%-12px)] sm:w-auto">
               <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 bg-[#873260]/10 rounded-full flex items-center justify-center group-hover:bg-[#873260] transition-colors duration-300">
                 <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#873260] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z" />
@@ -588,7 +588,7 @@ export default function HomePage() {
             </div>
 
             {/* Amenity 4 */}
-            <div className="text-center group">
+            <div className="text-center group w-[calc(50%-12px)] sm:w-auto">
               <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 bg-[#873260]/10 rounded-full flex items-center justify-center group-hover:bg-[#873260] transition-colors duration-300">
                 <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#873260] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
@@ -599,7 +599,7 @@ export default function HomePage() {
             </div>
 
             {/* Amenity 5 */}
-            <div className="text-center group">
+            <div className="text-center group w-[calc(50%-12px)] sm:w-auto">
               <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 bg-[#873260]/10 rounded-full flex items-center justify-center group-hover:bg-[#873260] transition-colors duration-300">
                 <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#873260] group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3l9 9m0 0l9-9M12 12v9m-4 0h8" />
