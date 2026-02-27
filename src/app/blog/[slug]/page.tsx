@@ -149,7 +149,7 @@ export default function BlogPostPage() {
               [&_blockquote]:border-l-2 [&_blockquote]:border-[#873260] [&_blockquote]:pl-6 [&_blockquote]:italic [&_blockquote]:text-[#666]
               [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6
               [&_li]:mb-2"
-            dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br />') }}
+            dangerouslySetInnerHTML={{ __html: post.content }}
           />
 
           {/* Tags */}

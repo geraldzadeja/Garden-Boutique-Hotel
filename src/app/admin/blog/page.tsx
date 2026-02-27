@@ -11,6 +11,9 @@ import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Plus, Pencil, Trash2, Upload, X } from 'lucide-react';
+import dynamic from 'next/dynamic';
+
+const RichTextEditor = dynamic(() => import('@/components/admin/RichTextEditor'), { ssr: false });
 
 interface BlogPost {
   id: string;
@@ -252,8 +255,12 @@ export default function AdminBlogPage() {
 
             {/* Content */}
             <div className="space-y-2">
-              <Label htmlFor="post-content">Content <span className="text-destructive">*</span></Label>
-              <Textarea id="post-content" value={formData.content} onChange={(e) => setFormData({ ...formData, content: e.target.value })} rows={8} placeholder="Write your post content here..." className="resize-y" />
+              <Label>Content <span className="text-destructive">*</span></Label>
+              <RichTextEditor
+                content={formData.content}
+                onChange={(html) => setFormData({ ...formData, content: html })}
+                placeholder="Write your post content here..."
+              />
             </div>
 
             {/* Tags */}
