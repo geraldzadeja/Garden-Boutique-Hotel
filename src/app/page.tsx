@@ -178,22 +178,105 @@ export default function HomePage() {
         {/* Dark Overlay */}
         <div className="absolute inset-0 bg-black/40" />
 
-        {/* Hero Content - Logo at Top */}
-        <div className="absolute top-4 md:top-5 left-0 right-0 z-10 flex justify-center px-4">
+        {/* Hero Content - Logo at Top (desktop only, mobile uses combined layout below) */}
+        <div className="hidden sm:flex absolute top-4 md:top-5 left-0 right-0 z-10 justify-center px-4">
           <div className="animate-fade-in" style={{ opacity: 0, animationFillMode: 'forwards' }}>
             <Image
               src="/garden-logo.png"
               alt={APP_NAME}
               width={600}
               height={210}
-              className="h-28 sm:h-40 md:h-56 lg:h-72 w-auto object-contain drop-shadow-2xl"
+              className="h-40 md:h-56 lg:h-72 w-auto object-contain drop-shadow-2xl"
               priority
             />
           </div>
         </div>
 
-        {/* Booking Widget - Compact */}
-        <div className="absolute inset-0 flex items-end sm:items-center justify-center z-10 px-4 md:px-8 pb-6 sm:pb-0 sm:pt-32 md:pt-40">
+        {/* Mobile: Logo + Booking Widget centered together */}
+        <div className="sm:hidden absolute inset-0 flex flex-col items-center justify-center z-10 px-4 gap-6">
+          <div className="animate-fade-in" style={{ opacity: 0, animationFillMode: 'forwards' }}>
+            <Image
+              src="/garden-logo.png"
+              alt={APP_NAME}
+              width={600}
+              height={210}
+              className="h-24 w-auto object-contain drop-shadow-2xl"
+              priority
+            />
+          </div>
+          <form onSubmit={handleCheckAvailability} className="w-full max-w-4xl">
+            <div className="flex flex-col items-stretch justify-between gap-1.5">
+              <CustomDatePicker
+                label="Arrival"
+                value={checkIn}
+                onChange={handleCheckInChange}
+                minDate={new Date().toISOString().split('T')[0]}
+                placeholder="Select date"
+              />
+              <CustomDatePicker
+                label="Departure"
+                value={checkOut}
+                onChange={setCheckOut}
+                minDate={getMinCheckOutDate()}
+                placeholder="Select date"
+                highlightDate={checkIn}
+              />
+              <div className="w-full">
+                <div className="flex items-end justify-between pb-2.5 border-b border-white/40">
+                  <div>
+                    <span className="text-white/60 text-[9px] tracking-[0.15em] uppercase block mb-0.5">Guests</span>
+                    <div className="flex items-baseline gap-1">
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        value={guests}
+                        placeholder="-"
+                        required
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/\D/g, '');
+                          if (val === '') {
+                            setGuests('');
+                          } else {
+                            const num = Math.min(22, parseInt(val));
+                            setGuests(String(num));
+                          }
+                        }}
+                        className="bg-transparent text-white text-base font-light w-7 outline-none border-none text-center placeholder:text-white/40"
+                      />
+                      <span className="text-white text-base font-light">{!guests || parseInt(guests) === 1 ? 'Guest' : 'Guests'}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => setGuests(String(Math.max(1, (parseInt(guests) || 1) - 1)))}
+                      className="w-6 h-6 rounded-full border border-white/40 text-white/80 hover:text-white hover:border-white transition-colors flex items-center justify-center"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 12h14" /></svg>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setGuests(String(Math.min(22, (parseInt(guests) || 0) + 1)))}
+                      className="w-6 h-6 rounded-full border border-white/40 text-white/80 hover:text-white hover:border-white transition-colors flex items-center justify-center"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 5v14m-7-7h14" /></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="mt-1 w-full px-5 py-3 border border-white/60 text-white text-sm font-light hover:bg-white hover:text-gray-900 transition-all duration-300 whitespace-nowrap"
+              >
+                Find room
+              </button>
+            </div>
+          </form>
+        </div>
+
+        {/* Desktop Booking Widget */}
+        <div className="hidden sm:flex absolute inset-0 items-center justify-center z-10 px-4 md:px-8 pt-32 md:pt-40">
           <form onSubmit={handleCheckAvailability} className="w-full max-w-4xl">
             <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-1.5 sm:gap-3 lg:gap-5">
               {/* Arrival */}
@@ -277,7 +360,7 @@ export default function HomePage() {
       <section className="py-12 md:py-16 px-4 bg-white" ref={introSection.elementRef}>
         <div className="max-w-5xl mx-auto">
           {/* Centered Text Content */}
-          <div className={`text-center mb-12 transition-all duration-1000 ${introSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className={`text-center mb-12 transition-all duration-1000 ${introSection.isVisible ? 'opacity-100 translate-y-0' : 'sm:opacity-0 sm:translate-y-10'}`}>
             <p className="text-[#873260] text-[11px] tracking-[0.4em] uppercase mb-6 font-medium">Welcome To</p>
             <h2 className="text-[28px] sm:text-[36px] md:text-[52px] leading-[1.1] font-serif mb-6 text-[#111111] px-4">
               Garden Boutique Hotel
@@ -290,7 +373,7 @@ export default function HomePage() {
           </div>
 
           {/* Horizontal Scrolling Gallery - Hotel Vienna Style */}
-          <div className={`relative transition-all duration-1000 ${introSection.isVisible ? 'opacity-100' : 'opacity-0'}`}>
+          <div className={`relative transition-all duration-1000 ${introSection.isVisible ? 'opacity-100' : 'sm:opacity-0'}`}>
             <div ref={carouselRef} className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4">
               {/* Image 1 */}
               <div className="relative flex-shrink-0 w-[280px] md:w-[320px] aspect-[9/16] snap-center overflow-hidden">
@@ -367,7 +450,7 @@ export default function HomePage() {
       {/* 3️⃣ ROOM HIGHLIGHTS SECTION */}
       <section className="py-16 md:py-20 px-4 bg-gray-50" ref={roomsSection.elementRef}>
         <div className="max-w-7xl mx-auto">
-          <div className={`text-center mb-12 transition-all duration-700 ${roomsSection.isVisible ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
+          <div className={`text-center mb-12 transition-all duration-700 ${roomsSection.isVisible ? 'animate-fade-in-up' : 'sm:opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
             <p className="text-[#873260] text-[11px] tracking-[0.4em] uppercase mb-6 font-medium">Accommodations</p>
             <h2 className="text-[28px] sm:text-[36px] md:text-[42px] leading-[1.2] font-serif mb-6 text-[#111111]">
               Our Rooms & Suites
@@ -377,7 +460,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 transition-all duration-700 ${roomsSection.isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
+          <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 transition-all duration-700 ${roomsSection.isVisible ? 'animate-fade-in' : 'sm:opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
             {roomsLoading ? (
               // Loading skeleton
               Array.from({ length: 4 }).map((_, index) => (
@@ -460,7 +543,7 @@ export default function HomePage() {
       {/* 4️⃣ AMENITIES / FACILITIES SECTION */}
       <section className="py-16 md:py-20 px-4 bg-white" ref={amenitiesSection.elementRef}>
         <div className="max-w-6xl mx-auto">
-          <div className={`text-center mb-14 transition-all duration-700 ${amenitiesSection.isVisible ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
+          <div className={`text-center mb-14 transition-all duration-700 ${amenitiesSection.isVisible ? 'animate-fade-in-up' : 'sm:opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
             <p className="text-[#873260] text-sm tracking-[0.2em] uppercase mb-4 font-medium">Hotel Amenities</p>
             <h2 className="text-[28px] sm:text-[36px] md:text-[42px] leading-[1.2] font-serif mb-6 text-[#111111]">
               Everything You Need
@@ -470,7 +553,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-12 transition-all duration-700 ${amenitiesSection.isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
+          <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-12 transition-all duration-700 ${amenitiesSection.isVisible ? 'animate-fade-in' : 'sm:opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
             {/* Amenity 1 */}
             <div className="text-center group">
               <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 bg-[#873260]/10 rounded-full flex items-center justify-center group-hover:bg-[#873260] transition-colors duration-300">
@@ -532,7 +615,7 @@ export default function HomePage() {
       {/* 5️⃣ TESTIMONIALS SECTION */}
       <section className="py-16 md:py-20 px-4 bg-white" ref={testimonialsSection.elementRef}>
         <div className="max-w-6xl mx-auto">
-          <div className={`text-center mb-14 transition-all duration-700 ${testimonialsSection.isVisible ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
+          <div className={`text-center mb-14 transition-all duration-700 ${testimonialsSection.isVisible ? 'animate-fade-in-up' : 'sm:opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
             <p className="text-[#873260] text-sm tracking-[0.2em] uppercase mb-4 font-medium">Testimonials</p>
             <h2 className="text-[28px] sm:text-[36px] md:text-[42px] leading-[1.2] font-serif mb-6 text-[#111111]">
               What Our Guests Say
@@ -540,7 +623,7 @@ export default function HomePage() {
             <p className="text-[17px] text-[#32373c] max-w-2xl mx-auto leading-relaxed">Hear from those who've experienced our hospitality</p>
           </div>
 
-          <div className={`transition-all duration-700 ${testimonialsSection.isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
+          <div className={`transition-all duration-700 ${testimonialsSection.isVisible ? 'animate-fade-in' : 'sm:opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
             <TestimonialsCarousel />
           </div>
         </div>
@@ -551,7 +634,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Text Column */}
-            <div className={`transition-all duration-700 ${locationSection.isVisible ? 'animate-slide-in-left' : 'opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
+            <div className={`transition-all duration-700 ${locationSection.isVisible ? 'animate-slide-in-left' : 'sm:opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
               <p className="text-[#873260] text-sm tracking-[0.2em] uppercase mb-4 font-medium">Location</p>
               <h2 className="text-[28px] sm:text-[36px] md:text-[42px] leading-[1.2] font-serif mb-8 text-[#111111]">
                 Find Us in the Heart of Elbasan
@@ -608,7 +691,7 @@ export default function HomePage() {
             </div>
 
             {/* Interactive Map */}
-            <div className={`h-[300px] sm:h-[400px] lg:h-[500px] overflow-hidden transition-all duration-700 ${locationSection.isVisible ? 'animate-slide-in-right' : 'opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
+            <div className={`h-[300px] sm:h-[400px] lg:h-[500px] overflow-hidden transition-all duration-700 ${locationSection.isVisible ? 'animate-slide-in-right' : 'sm:opacity-0'}`} style={{ animationFillMode: 'forwards' }}>
               <Map
                 latitude={41.116990}
                 longitude={20.089142}
