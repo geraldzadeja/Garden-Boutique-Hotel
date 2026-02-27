@@ -77,7 +77,7 @@ export default function Navigation({ variant = 'transparent', hideBookNow = fals
           <Link
             href="/availability"
             className={isTransparent
-              ? 'text-white text-[11px] sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] font-medium px-3 sm:px-6 py-2 sm:py-2.5 border border-white/50 hover:bg-white/15 hover:backdrop-blur-md transition-all duration-300'
+              ? 'text-white text-[11px] sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] font-medium px-3 sm:px-6 py-2 sm:py-2.5 bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/20 transition-all duration-300'
               : 'text-[#111111] text-[11px] sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] font-medium px-3 sm:px-6 py-2 sm:py-2.5 border border-[#111111]/50 hover:bg-[#111111]/10 transition-all duration-300'
             }
           >
@@ -108,7 +108,7 @@ export default function Navigation({ variant = 'transparent', hideBookNow = fals
             <Link
               href="/availability"
               onClick={() => setMenuOpen(false)}
-              className="block w-full text-center bg-white/5 backdrop-blur-lg hover:bg-white/15 text-white py-4 text-sm tracking-[0.15em] transition-all duration-300 border border-white/20"
+              className="block w-full text-center bg-white/15 hover:bg-white/25 text-white py-4 text-sm tracking-[0.15em] font-medium transition-all duration-300 border border-white/30"
             >
               BOOK NOW
             </Link>

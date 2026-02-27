@@ -159,8 +159,8 @@ export default function CustomDatePicker({
         {variant === 'dark' ? (
           <div className="flex items-center justify-between pb-2.5 border-b border-white/40">
             <div>
-              <span className="text-white/60 text-[9px] tracking-[0.15em] uppercase block mb-0.5">{label}</span>
-              <span className="text-white text-base sm:text-lg md:text-xl font-light">{displayValue}</span>
+              <span className="text-white/60 text-[11px] sm:text-[9px] tracking-[0.15em] uppercase block mb-0.5">{label}</span>
+              <span className="text-white text-lg sm:text-lg md:text-xl font-light">{displayValue}</span>
             </div>
             <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />

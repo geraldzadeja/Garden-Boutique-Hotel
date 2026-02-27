@@ -194,7 +194,7 @@ export default function HomePage() {
 
         {/* Mobile: Logo + Booking Widget centered together */}
         <div className="sm:hidden absolute inset-0 flex flex-col items-center justify-center z-10 px-4 gap-4">
-          <div className="animate-fade-in -mt-12" style={{ opacity: 0, animationFillMode: 'forwards' }}>
+          <div className="animate-fade-in -mt-20" style={{ opacity: 0, animationFillMode: 'forwards' }}>
             <Image
               src="/garden-logo.png"
               alt={APP_NAME}
@@ -224,7 +224,7 @@ export default function HomePage() {
               <div className="w-full">
                 <div className="flex items-end justify-between pb-2.5 border-b border-white/40">
                   <div>
-                    <span className="text-white/60 text-[9px] tracking-[0.15em] uppercase block mb-0.5">Guests</span>
+                    <span className="text-white/60 text-[11px] tracking-[0.15em] uppercase block mb-0.5">Guests</span>
                     <div className="flex items-baseline gap-1">
                       <input
                         type="text"
@@ -242,32 +242,32 @@ export default function HomePage() {
                             setGuests(String(num));
                           }
                         }}
-                        className="bg-transparent text-white text-base font-light w-7 outline-none border-none text-center placeholder:text-white/40"
+                        className="bg-transparent text-white text-lg font-light w-8 outline-none border-none text-center placeholder:text-white/40"
                       />
-                      <span className="text-white text-base font-light">{!guests || parseInt(guests) === 1 ? 'Guest' : 'Guests'}</span>
+                      <span className="text-white text-lg font-light">{!guests || parseInt(guests) === 1 ? 'Guest' : 'Guests'}</span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-2">
                     <button
                       type="button"
                       onClick={() => setGuests(String(Math.max(1, (parseInt(guests) || 1) - 1)))}
-                      className="w-6 h-6 rounded-full border border-white/40 text-white/80 hover:text-white hover:border-white transition-colors flex items-center justify-center"
+                      className="w-7 h-7 rounded-full border border-white/40 text-white/80 hover:text-white hover:border-white transition-colors flex items-center justify-center"
                     >
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 12h14" /></svg>
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 12h14" /></svg>
                     </button>
                     <button
                       type="button"
                       onClick={() => setGuests(String(Math.min(22, (parseInt(guests) || 0) + 1)))}
-                      className="w-6 h-6 rounded-full border border-white/40 text-white/80 hover:text-white hover:border-white transition-colors flex items-center justify-center"
+                      className="w-7 h-7 rounded-full border border-white/40 text-white/80 hover:text-white hover:border-white transition-colors flex items-center justify-center"
                     >
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 5v14m-7-7h14" /></svg>
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 5v14m-7-7h14" /></svg>
                     </button>
                   </div>
                 </div>
               </div>
               <button
                 type="submit"
-                className="mt-1 w-full px-5 py-3 border border-white/60 text-white text-sm font-light hover:bg-white hover:text-gray-900 transition-all duration-300 whitespace-nowrap"
+                className="mt-1 w-full px-5 py-3.5 bg-white/10 backdrop-blur-md border border-white/40 text-white text-base font-light hover:bg-white/25 transition-all duration-300 whitespace-nowrap"
               >
                 Find room
               </button>
