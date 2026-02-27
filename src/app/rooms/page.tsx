@@ -236,18 +236,27 @@ export default function RoomsPage() {
                   key={room.id}
                   className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start border-b border-gray-200 pb-12 last:border-b-0"
                 >
-                  {/* Image Section with Carousel - Links to room detail */}
+                  {/* Image Section with Sliding Carousel - Links to room detail */}
                   <Link
                     href={`/rooms/${room.slug}`}
                     className="relative h-[350px] lg:h-[380px] overflow-hidden group rounded-sm block"
                   >
-                    <Image
-                      src={room.images[cardImageIndex[room.id] || 0] || room.images[0]}
-                      alt={room.name}
-                      fill
-                      className="object-cover transition-all duration-500 ease-out group-hover:scale-[1.03]"
-                      priority={index === 0}
-                    />
+                    <div
+                      className="flex h-full transition-transform duration-700 ease-in-out"
+                      style={{ transform: `translateX(-${(cardImageIndex[room.id] || 0) * 100}%)` }}
+                    >
+                      {room.images.map((img, i) => (
+                        <div key={i} className="relative w-full h-full flex-shrink-0">
+                          <Image
+                            src={img}
+                            alt={`${room.name} - Photo ${i + 1}`}
+                            fill
+                            className="object-cover"
+                            priority={index === 0 && i === 0}
+                          />
+                        </div>
+                      ))}
+                    </div>
                     {room.images.length > 1 && (
                       <>
                         <button
@@ -264,7 +273,7 @@ export default function RoomsPage() {
                         </button>
                         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
                           {room.images.map((_, i) => (
-                            <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all ${i === (cardImageIndex[room.id] || 0) ? 'bg-white w-3' : 'bg-white/50'}`} />
+                            <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${i === (cardImageIndex[room.id] || 0) ? 'bg-white w-3' : 'bg-white/50'}`} />
                           ))}
                         </div>
                       </>
@@ -288,13 +297,13 @@ export default function RoomsPage() {
                         <p className="text-[9px] text-[#873260] tracking-[0.2em] uppercase mb-1.5 font-medium">Guests</p>
                         <p className="text-[14px] text-[#111111] font-light">{room.capacity}</p>
                       </div>
-                      <div>
-                        <p className="text-[9px] text-[#873260] tracking-[0.2em] uppercase mb-1.5 font-medium">Size</p>
-                        <p className="text-[14px] text-[#111111] font-light">{room.size} m²</p>
-                      </div>
-                      <div>
+                      <div className="text-center">
                         <p className="text-[9px] text-[#873260] tracking-[0.2em] uppercase mb-1.5 font-medium">Price</p>
                         <p className="text-[20px] text-[#111111] font-serif leading-none">€{Number(room.pricePerNight).toFixed(0)}<span className="text-[12px] text-[#666] font-light ml-1">/night</span></p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-[9px] text-[#873260] tracking-[0.2em] uppercase mb-1.5 font-medium">Size</p>
+                        <p className="text-[14px] text-[#111111] font-light">{room.size} m²</p>
                       </div>
                     </div>
 
