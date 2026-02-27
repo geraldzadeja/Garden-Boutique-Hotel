@@ -148,7 +148,8 @@ export default function BlogPostPage() {
               [&_a]:text-[#873260] [&_a]:underline [&_a:hover]:text-[#6B2850]
               [&_blockquote]:border-l-2 [&_blockquote]:border-[#873260] [&_blockquote]:pl-6 [&_blockquote]:italic [&_blockquote]:text-[#666]
               [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6
-              [&_li]:mb-2"
+              [&_li]:mb-2
+              [&_img]:rounded-md [&_img]:max-w-full [&_img]:h-auto [&_img]:my-8"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
 
