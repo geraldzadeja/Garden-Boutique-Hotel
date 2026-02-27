@@ -542,75 +542,43 @@ function AvailabilityContent() {
       {/* Mobile Booking Summary - Shows at bottom only when rooms selected */}
       {selectedRooms.length > 0 && (
         <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40">
-          {/* Expandable panel */}
-          <div className="bg-white border-t border-[#e5e5e5] shadow-[0_-4px_20px_rgba(0,0,0,0.12)] rounded-t-xl max-h-[75vh] overflow-y-auto">
-            {/* Hotel Info Header */}
-            <div className="px-4 pt-4 pb-3 bg-[#f9f9f7] border-b border-[#e5e5e5] rounded-t-xl">
-              <h3 className="text-[16px] font-bold text-[#111111] mb-2">Garden Boutique Hotel</h3>
-
-              {/* Check-in/Check-out Times */}
-              <div className="flex items-center gap-2 mb-1.5">
-                <svg className="w-3.5 h-3.5 text-[#666] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <p className="text-[12px] text-[#666]">Check-in after 14:00 | Checkout 11:00 AM</p>
+          <div className="bg-white border-t border-[#e5e5e5] shadow-[0_-4px_16px_rgba(0,0,0,0.1)] rounded-t-lg">
+            {/* Compact header: hotel name + key info in one row */}
+            <div className="px-4 pt-3 pb-2 bg-[#f9f9f7] border-b border-[#e5e5e5] rounded-t-lg">
+              <div className="flex items-center justify-between mb-1">
+                <h3 className="text-[14px] font-bold text-[#111111]">Garden Boutique Hotel</h3>
+                <p className="text-[11px] text-[#666]">{guests} {parseInt(guests) === 1 ? 'guest' : 'guests'} · {summary.totalRooms} {summary.totalRooms === 1 ? 'room' : 'rooms'}</p>
               </div>
-
-              {/* Dates */}
-              {checkIn && checkOut && (
-                <div className="flex items-center gap-2 mb-1.5">
-                  <svg className="w-3.5 h-3.5 text-[#666] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <p className="text-[12px] text-[#666]">
-                    {new Date(checkIn).toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' })} - {new Date(checkOut).toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' })}
-                  </p>
-                </div>
-              )}
-
-              {/* Guests & Rooms */}
-              <div className="flex items-center gap-2">
-                <svg className="w-3.5 h-3.5 text-[#666] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                <p className="text-[12px] text-[#666]">{guests} {parseInt(guests) === 1 ? 'adult' : 'adults'}, {summary.totalRooms} {summary.totalRooms === 1 ? 'room' : 'rooms'}</p>
+              <div className="flex items-center gap-3 text-[11px] text-[#666]">
+                <span>Check-in 14:00 | Checkout 11:00</span>
+                {checkIn && checkOut && (
+                  <>
+                    <span className="text-[#ccc]">|</span>
+                    <span>{new Date(checkIn).toLocaleDateString('en', { month: 'short', day: 'numeric' })} – {new Date(checkOut).toLocaleDateString('en', { month: 'short', day: 'numeric' })}</span>
+                  </>
+                )}
               </div>
             </div>
 
-            {/* Selected Rooms List */}
-            <div className="divide-y divide-[#e5e5e5]">
+            {/* Selected Rooms - compact list */}
+            <div className="divide-y divide-[#f0f0f0] max-h-[120px] overflow-y-auto">
               {selectedRooms.map((selection) => {
                 const room = rooms.find((r) => r.id === selection.roomId);
                 if (!room) return null;
                 return (
-                  <div key={selection.roomId} className="p-4 flex gap-3">
-                    {/* Room Image Thumbnail */}
-                    <div className="relative w-16 h-16 flex-shrink-0 rounded overflow-hidden">
-                      <Image
-                        src={room.images[0]}
-                        alt={room.name}
-                        fill
-                        className="object-cover"
-                      />
+                  <div key={selection.roomId} className="px-4 py-2.5 flex items-center gap-3">
+                    <div className="relative w-10 h-10 flex-shrink-0 rounded overflow-hidden">
+                      <Image src={room.images[0]} alt={room.name} fill className="object-cover" />
                     </div>
-
-                    {/* Room Details */}
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-[13px] font-semibold text-[#111111] mb-0.5 line-clamp-1">{room.name}</h4>
-                      <p className="text-[11px] text-[#666] mb-1.5">
-                        {selection.quantity} {selection.quantity === 1 ? 'room' : 'rooms'} × {summary.nights} {summary.nights === 1 ? 'night' : 'nights'}
-                      </p>
-                      <button
-                        onClick={() => updateQuantity(selection.roomId, 0)}
-                        className="text-[11px] text-[#873260] hover:text-[#6d2850] font-medium"
-                      >
-                        Remove
-                      </button>
-                    </div>
-
-                    {/* Price */}
-                    <div className="text-right flex-shrink-0">
-                      <p className="text-[15px] font-bold text-[#111111]">€{(room.pricePerNight * selection.quantity * summary.nights).toFixed(0)}</p>
+                      <div className="flex items-baseline justify-between gap-2">
+                        <h4 className="text-[12px] font-semibold text-[#111111] truncate">{room.name}</h4>
+                        <p className="text-[13px] font-bold text-[#111111] flex-shrink-0">€{(room.pricePerNight * selection.quantity * summary.nights).toFixed(0)}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <p className="text-[10px] text-[#666]">{selection.quantity} {selection.quantity === 1 ? 'room' : 'rooms'} × {summary.nights} {summary.nights === 1 ? 'night' : 'nights'}</p>
+                        <button onClick={() => updateQuantity(selection.roomId, 0)} className="text-[10px] text-[#873260] font-medium">Remove</button>
+                      </div>
                     </div>
                   </div>
                 );
@@ -618,43 +586,33 @@ function AvailabilityContent() {
             </div>
 
             {/* Total & CTA */}
-            <div className="p-4 border-t border-[#e5e5e5] bg-white">
-              {/* Validation Messages */}
+            <div className="px-4 pt-2.5 pb-3 border-t border-[#e5e5e5]">
               {(!checkIn || !checkOut) ? (
-                <div className="bg-amber-50 border border-amber-200 rounded-sm p-2 flex items-center gap-2 mb-3">
-                  <svg className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                  </svg>
-                  <p className="text-[11px] text-amber-700">Select check-in and check-out dates</p>
-                </div>
+                <p className="text-[10px] text-amber-700 mb-2">Select check-in and check-out dates to continue</p>
               ) : summary.totalCapacity < parseInt(guests) ? (
-                <div className="bg-red-50 border border-red-200 rounded-sm p-2 flex items-center gap-2 mb-3">
-                  <svg className="w-3.5 h-3.5 text-red-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <p className="text-[11px] text-red-700">Need more capacity for {guests} guests</p>
-                </div>
+                <p className="text-[10px] text-red-700 mb-2">Need more room capacity for {guests} guests</p>
               ) : null}
 
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[15px] font-bold text-[#111111]">Total</span>
-                <span className="text-[24px] font-bold text-[#111111]">€{summary.grandTotal}</span>
+              <div className="flex items-center gap-3">
+                <div className="flex-1">
+                  <p className="text-[10px] text-[#666]">Total</p>
+                  <p className="text-[20px] font-bold text-[#111111] leading-none">€{summary.grandTotal}</p>
+                </div>
+                <button
+                  onClick={handleContinue}
+                  disabled={!requirementsMet}
+                  className="bg-[#873260] hover:bg-[#6d2850] text-white px-6 py-3 rounded-sm transition-all text-[12px] font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Book {summary.totalRooms} {summary.totalRooms === 1 ? 'room' : 'rooms'}
+                </button>
               </div>
-
-              <button
-                onClick={handleContinue}
-                disabled={!requirementsMet}
-                className="w-full bg-[#873260] hover:bg-[#6d2850] text-white py-3.5 rounded-sm transition-all text-[13px] font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Book {summary.totalRooms} {summary.totalRooms === 1 ? 'room' : 'rooms'}
-              </button>
             </div>
           </div>
         </div>
       )}
 
       {/* Spacer for mobile fixed footer */}
-      {selectedRooms.length > 0 && <div className="lg:hidden h-[280px]"></div>}
+      {selectedRooms.length > 0 && <div className="lg:hidden h-[160px]"></div>}
 
       <Footer />
     </div>
