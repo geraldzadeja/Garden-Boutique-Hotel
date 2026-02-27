@@ -15,6 +15,7 @@ interface Booking {
   guestName: string;
   guestEmail: string;
   guestPhone: string;
+  guestNationality?: string;
   room: { name: string; id: string };
   checkInDate: string;
   checkOutDate: string;
@@ -35,6 +36,7 @@ interface GroupedReservation {
   guestName: string;
   guestEmail: string;
   guestPhone: string;
+  guestNationality?: string;
   checkInDate: string;
   checkOutDate: string;
   numberOfNights: number;
@@ -78,6 +80,7 @@ export default function AdminBookingsPage() {
         guestName: first.guestName,
         guestEmail: first.guestEmail,
         guestPhone: first.guestPhone,
+        guestNationality: first.guestNationality,
         checkInDate: first.checkInDate,
         checkOutDate: first.checkOutDate,
         numberOfNights: first.numberOfNights,
@@ -311,6 +314,12 @@ export default function AdminBookingsPage() {
                   <p className="text-xs text-muted-foreground">Phone</p>
                   <p className="text-sm font-medium">{selectedReservation.guestPhone}</p>
                 </div>
+                {selectedReservation.guestNationality && (
+                  <div>
+                    <p className="text-xs text-muted-foreground">Nationality</p>
+                    <p className="text-sm font-medium">{selectedReservation.guestNationality}</p>
+                  </div>
+                )}
                 <div>
                   <p className="text-xs text-muted-foreground">Guests</p>
                   <p className="text-sm font-medium">{selectedReservation.numberOfGuests}</p>

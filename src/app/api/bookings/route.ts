@@ -124,6 +124,7 @@ export async function POST(request: NextRequest) {
           guestName: validated.guestName,
           guestEmail: validated.guestEmail,
           guestPhone: validated.guestPhone,
+          guestNationality: validated.guestNationality,
           specialRequests: validated.specialRequests,
           pricePerNight: room.pricePerNight,
           totalPrice,

@@ -41,6 +41,8 @@ function BookingContent() {
 
   const [countryCode, setCountryCode] = useState('+355'); // Default to Albania
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [nationality, setNationality] = useState('');
+  const [isNationalityOpen, setIsNationalityOpen] = useState(false);
 
   // Common country codes with flags
   const countryCodes = [
@@ -194,6 +196,7 @@ function BookingContent() {
           guestName: formData.name,
           guestEmail: formData.email,
           guestPhone: `${countryCode} ${formData.phone}`,
+          guestNationality: nationality || undefined,
           specialRequests: formData.specialRequests,
         }))
       );
@@ -368,6 +371,49 @@ function BookingContent() {
 
                 <div>
                   <label className="block text-[9px] text-[#873260] tracking-[0.2em] uppercase mb-2 font-medium">
+                    Nationality
+                  </label>
+                  <div className="relative">
+                    <button
+                      type="button"
+                      onClick={() => setIsNationalityOpen(!isNationalityOpen)}
+                      className="w-full px-4 py-3.5 border border-[#e5e5e5] rounded-sm focus:outline-none focus:border-[#873260] transition-colors text-[14px] text-[#111111] bg-white cursor-pointer flex items-center gap-2 text-left"
+                    >
+                      {nationality ? (
+                        <>
+                          <span className={`fi fi-${countryCodes.find(c => c.country === nationality)?.iso2} text-[18px] flex-shrink-0`}></span>
+                          <span className="flex-1">{nationality}</span>
+                        </>
+                      ) : (
+                        <span className="flex-1 text-[#999]">Select nationality</span>
+                      )}
+                      <svg className="w-3 h-3 text-[#666] flex-shrink-0" fill="currentColor" viewBox="0 0 12 12">
+                        <path d="M6 9L1 4h10z" />
+                      </svg>
+                    </button>
+                    {isNationalityOpen && (
+                      <>
+                        <div className="fixed inset-0 z-10" onClick={() => setIsNationalityOpen(false)}></div>
+                        <div className="absolute left-0 top-full mt-1 w-full max-h-[300px] overflow-y-auto bg-white border border-[#e5e5e5] rounded-sm shadow-lg z-20">
+                          {countryCodes.map(({ country, iso2 }) => (
+                            <button
+                              key={`${country}-${iso2}`}
+                              type="button"
+                              onClick={() => { setNationality(country); setIsNationalityOpen(false); }}
+                              className={`w-full px-4 py-2.5 text-left hover:bg-[#f5f5f5] transition-colors flex items-center gap-2.5 text-[14px] ${nationality === country ? 'bg-[#873260]/10' : ''}`}
+                            >
+                              <span className={`fi fi-${iso2} text-[18px]`}></span>
+                              <span className="text-[#111111]">{country}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[9px] text-[#873260] tracking-[0.2em] uppercase mb-2 font-medium">
                     Phone Number <span className="text-[#991b1b]">*</span>
                   </label>
                   <div className="flex gap-2">
@@ -395,7 +441,7 @@ function BookingContent() {
                           ></div>
 
                           {/* Dropdown Options */}
-                          <div className="fixed sm:absolute bottom-0 sm:bottom-auto left-0 right-0 sm:right-auto sm:top-full sm:mt-1 w-full sm:w-[220px] max-h-[50vh] sm:max-h-[300px] overflow-y-auto bg-white border border-[#e5e5e5] rounded-t-xl sm:rounded-t-sm sm:rounded-sm shadow-lg z-20">
+                          <div className="absolute bottom-auto left-0 top-full mt-1 w-[260px] max-h-[300px] overflow-y-auto bg-white border border-[#e5e5e5] rounded-sm shadow-lg z-20">
                             {countryCodes.map(({ code, country, iso2 }) => (
                               <button
                                 key={code}

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -27,6 +26,7 @@ interface Booking {
   guestName: string;
   guestEmail: string;
   guestPhone: string;
+  guestNationality: string | null;
   specialRequests: string | null;
   pricePerNight: string;
   totalPrice: string;
@@ -346,17 +346,10 @@ export default function MyBookingPage() {
           <div className="absolute inset-0 bg-black/50" onClick={() => !cancelling && setShowCancelModal(null)} />
           <div className="relative bg-white rounded-sm max-w-md w-full p-5 sm:p-8 shadow-xl">
             <h3 className="text-[18px] sm:text-[20px] font-serif text-[#111111] mb-3 sm:mb-4">Cancel Reservation</h3>
-            <p className="text-[14px] text-[#32373c] font-light leading-[1.7] mb-2">
+            <p className="text-[14px] text-[#32373c] font-light leading-[1.7] mb-6">
               Are you sure you want to cancel reservation <strong className="font-medium font-mono">{showCancelModal}</strong>?
               {bookings && bookings.length > 1 && ' This will cancel all rooms in this reservation.'}
             </p>
-            <div className="bg-yellow-50 border border-yellow-200 rounded-sm p-4 mb-6">
-              <p className="text-[13px] text-yellow-800 font-light leading-[1.7]">
-                <strong className="font-medium">Cancellation Policy:</strong> Cancellations made 7+ days before arrival receive a full refund.
-                Cancellations within 3-7 days are subject to a 50% charge. Less than 3 days incur 100% charge.{' '}
-                <Link href="/cancellation" className="text-[#873260] underline" target="_blank">View full policy</Link>
-              </p>
-            </div>
             <div className="flex gap-3">
               <button
                 onClick={() => setShowCancelModal(null)}

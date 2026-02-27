@@ -31,6 +31,7 @@ interface Guest {
   name: string;
   email: string;
   phone: string;
+  nationality?: string;
   totalReservations: number;
   totalSpent: number;
   lastBooking: string;
@@ -102,6 +103,7 @@ export default function AdminGuestsPage() {
             name: booking.guestName,
             email: booking.guestEmail,
             phone: booking.guestPhone,
+            nationality: booking.guestNationality,
             totalReservations: validReservations.length,
             totalSpent,
             lastBooking,
@@ -239,6 +241,12 @@ export default function AdminGuestsPage() {
                   <p className="text-xs text-muted-foreground">Phone</p>
                   <p className="text-sm font-medium text-foreground mt-1">{selectedGuest.phone}</p>
                 </div>
+                {selectedGuest.nationality && (
+                  <div className="rounded-lg bg-muted/50 p-4">
+                    <p className="text-xs text-muted-foreground">Nationality</p>
+                    <p className="text-sm font-medium text-foreground mt-1">{selectedGuest.nationality}</p>
+                  </div>
+                )}
               </div>
 
               {/* Reservation History */}

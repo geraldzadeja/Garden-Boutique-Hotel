@@ -28,6 +28,7 @@ interface Booking {
   guestName: string;
   guestEmail: string;
   guestPhone: string;
+  guestNationality: string | null;
   specialRequests: string | null;
   pricePerNight: string;
   totalPrice: string;
@@ -211,6 +212,13 @@ function ConfirmationContent() {
               <span className="text-[13px] text-[#999] font-light uppercase tracking-wider">Email</span>
               <span className="text-[15px] text-[#111111]">{firstBooking.guestEmail}</span>
             </div>
+
+            {firstBooking.guestNationality && (
+              <div className="flex justify-between items-center">
+                <span className="text-[13px] text-[#999] font-light uppercase tracking-wider">Nationality</span>
+                <span className="text-[15px] text-[#111111]">{firstBooking.guestNationality}</span>
+              </div>
+            )}
 
             <div className="border-t border-[#f0f0f0]" />
 

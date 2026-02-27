@@ -9,6 +9,7 @@ export const createBookingSchema = z
     guestName: z.string().min(2).max(100),
     guestEmail: z.string().email(),
     guestPhone: z.string().min(8).max(20),
+    guestNationality: z.string().max(100).optional(),
     specialRequests: z.string().max(1000).optional(),
     reservationGroupId: z.string().optional(),
   })
