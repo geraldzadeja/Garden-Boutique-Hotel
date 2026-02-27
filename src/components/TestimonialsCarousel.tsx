@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 const testimonials = [
   {
@@ -67,17 +67,25 @@ const testimonials = [
 
 export default function TestimonialsCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const itemsPerView = 3;
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const itemsPerView = isMobile ? 1 : 3;
   const maxIndex = testimonials.length - itemsPerView;
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     setCurrentIndex((prev) => (prev > 0 ? prev - 1 : maxIndex));
-  };
+  }, [maxIndex]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setCurrentIndex((prev) => (prev < maxIndex ? prev + 1 : 0));
-  };
+  }, [maxIndex]);
 
   // Auto-scroll every 5 seconds
   useEffect(() => {
@@ -93,26 +101,26 @@ export default function TestimonialsCarousel() {
       {/* Navigation Buttons */}
       <button
         onClick={handlePrevious}
-        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-sage-50 transition-colors"
+        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 md:-translate-x-12 z-10 bg-white rounded-full p-2 md:p-3 shadow-lg hover:bg-sage-50 transition-colors"
         aria-label="Previous testimonials"
       >
-        <svg className="w-6 h-6 text-sage-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5 md:w-6 md:h-6 text-sage-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
 
       <button
         onClick={handleNext}
-        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-sage-50 transition-colors"
+        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 md:translate-x-12 z-10 bg-white rounded-full p-2 md:p-3 shadow-lg hover:bg-sage-50 transition-colors"
         aria-label="Next testimonials"
       >
-        <svg className="w-6 h-6 text-sage-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5 md:w-6 md:h-6 text-sage-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </button>
 
       {/* Carousel Container */}
-      <div className="overflow-hidden">
+      <div className="overflow-hidden mx-6 md:mx-0">
         <div
           className="flex transition-transform duration-500 ease-in-out"
           style={{
@@ -122,15 +130,15 @@ export default function TestimonialsCarousel() {
           {testimonials.map((testimonial) => (
             <div
               key={testimonial.id}
-              className="w-full md:w-1/3 flex-shrink-0 px-4"
+              className="w-full md:w-1/3 flex-shrink-0 px-2 md:px-4"
             >
-              <div className="bg-beige-50 rounded-2xl p-8 h-full flex flex-col">
-                <div className="mb-6">
-                  <svg className="w-10 h-10 text-sage-400" fill="currentColor" viewBox="0 0 24 24">
+              <div className="bg-beige-50 rounded-2xl p-6 md:p-8 h-full flex flex-col">
+                <div className="mb-4 md:mb-6">
+                  <svg className="w-8 h-8 md:w-10 md:h-10 text-sage-400" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                   </svg>
                 </div>
-                <p className="text-gray-700 mb-6 leading-relaxed flex-grow">
+                <p className="text-gray-700 mb-6 leading-relaxed flex-grow text-[15px]">
                   "{testimonial.quote}"
                 </p>
                 <div className="border-t border-beige-200 pt-4">
@@ -150,7 +158,7 @@ export default function TestimonialsCarousel() {
             key={index}
             onClick={() => setCurrentIndex(index)}
             className={`w-2 h-2 rounded-full transition-all ${
-              index === currentIndex ? 'bg-sage-600 w-8' : 'bg-beige-300'
+              index === currentIndex ? 'bg-sage-600 w-6 md:w-8' : 'bg-beige-300'
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />

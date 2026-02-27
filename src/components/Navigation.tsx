@@ -89,14 +89,14 @@ export default function Navigation({ variant = 'transparent', hideBookNow = fals
       {/* Slide-out Menu */}
       <div className={`fixed top-0 left-0 h-full w-80 bg-white/10 backdrop-blur-xl shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="flex flex-col h-full px-8 pt-24 sm:pt-20 pb-8">
-          {/* Menu Links - fill available space with even distribution */}
-          <nav className="flex-1 flex flex-col justify-center gap-1">
-            {NAV_LINKS.map((link, index) => (
+          {/* Menu Links - evenly distributed to fill available space */}
+          <nav className="flex-1 flex flex-col justify-evenly">
+            {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className={`block py-4 sm:py-3.5 text-[22px] sm:text-[18px] text-white hover:text-[#d4a3c3] transition-colors font-light tracking-wide ${index < NAV_LINKS.length - 1 ? 'border-b border-white/20' : ''}`}
+                className="block text-[22px] sm:text-[18px] text-white hover:text-[#d4a3c3] transition-colors font-light tracking-wide border-b border-white/15 pb-4"
               >
                 {link.label}
               </Link>
@@ -104,11 +104,11 @@ export default function Navigation({ variant = 'transparent', hideBookNow = fals
           </nav>
 
           {/* Menu Footer - transparent blur button */}
-          <div className="mt-auto">
+          <div className="mt-6">
             <Link
               href="/availability"
               onClick={() => setMenuOpen(false)}
-              className="block w-full text-center bg-white/10 backdrop-blur-md hover:bg-white/20 text-white py-4 text-sm tracking-[0.15em] transition-all duration-300 border border-white/30"
+              className="block w-full text-center bg-white/5 backdrop-blur-lg hover:bg-white/15 text-white py-4 text-sm tracking-[0.15em] transition-all duration-300 border border-white/20"
             >
               BOOK NOW
             </Link>

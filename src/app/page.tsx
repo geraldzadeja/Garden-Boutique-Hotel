@@ -194,18 +194,18 @@ export default function HomePage() {
 
         {/* Mobile: Logo + Booking Widget centered together */}
         <div className="sm:hidden absolute inset-0 flex flex-col items-center justify-center z-10 px-4 gap-4">
-          <div className="animate-fade-in -mt-6" style={{ opacity: 0, animationFillMode: 'forwards' }}>
+          <div className="animate-fade-in -mt-12" style={{ opacity: 0, animationFillMode: 'forwards' }}>
             <Image
               src="/garden-logo.png"
               alt={APP_NAME}
               width={600}
               height={210}
-              className="h-52 w-auto object-contain drop-shadow-2xl"
+              className="h-60 w-auto object-contain drop-shadow-2xl"
               priority
             />
           </div>
           <form onSubmit={handleCheckAvailability} className="w-full max-w-4xl mt-2">
-            <div className="flex flex-col items-stretch justify-between gap-1.5">
+            <div className="flex flex-col items-stretch justify-between gap-3">
               <CustomDatePicker
                 label="Arrival"
                 value={checkIn}
