@@ -122,7 +122,7 @@ export default function ContactPage() {
                   </svg>
                   <div>
                     <p className="font-medium text-[#111111] text-[15px] mb-1">Hours</p>
-                    <p className="text-[#32373c] text-[15px] font-light">Reception open 07:00 – 23:00</p>
+                    <p className="text-[#32373c] text-[15px] font-light">Reception closes at 23:00</p>
                   </div>
                 </div>
               </div>
