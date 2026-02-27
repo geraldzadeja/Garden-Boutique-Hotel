@@ -158,6 +158,23 @@ export default function RoomsPage() {
     fetchRooms();
   }, []);
 
+  // Auto-transition room photos every 4 seconds
+  useEffect(() => {
+    if (rooms.length === 0) return;
+    const interval = setInterval(() => {
+      setCardImageIndex(prev => {
+        const next = { ...prev };
+        rooms.forEach(room => {
+          if (room.images.length > 1) {
+            next[room.id] = ((prev[room.id] || 0) + 1) % room.images.length;
+          }
+        });
+        return next;
+      });
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [rooms]);
+
   return (
     <div className="min-h-screen bg-white">
       <Navigation variant="solid" />
@@ -266,7 +283,7 @@ export default function RoomsPage() {
                     </div>
 
                     {/* Room Details Grid - Horizontal */}
-                    <div className="flex gap-8 py-4 border-y border-[#e5e5e5]">
+                    <div className="flex justify-between py-4 border-y border-[#e5e5e5]">
                       <div>
                         <p className="text-[9px] text-[#873260] tracking-[0.2em] uppercase mb-1.5 font-medium">Guests</p>
                         <p className="text-[14px] text-[#111111] font-light">{room.capacity}</p>
