@@ -219,7 +219,7 @@ export default function HomePage() {
             />
           </div>
           <form onSubmit={handleCheckAvailability} className="w-full max-w-4xl mt-2">
-            <div className="flex flex-col items-stretch justify-between gap-3">
+            <div className="flex flex-col items-stretch justify-between gap-5">
               <CustomDatePicker
                 label="Arrival"
                 value={checkIn}
