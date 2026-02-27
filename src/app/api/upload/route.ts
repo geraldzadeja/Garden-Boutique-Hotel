@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/auth';
-import { writeFile } from 'fs/promises';
-import path from 'path';
+import { put } from '@vercel/blob';
 
 // POST /api/upload - Upload image file (admin only)
 export async function POST(request: NextRequest) {
@@ -35,27 +34,19 @@ export async function POST(request: NextRequest) {
     }
 
     // Generate unique filename
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
     const timestamp = Date.now();
     const originalName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-    const filename = `${timestamp}-${originalName}`;
-
-    // Determine upload folder (default: blog)
     const folder = formData.get('folder') as string || 'blog';
     const allowedFolders = ['blog', 'rooms'];
     const targetFolder = allowedFolders.includes(folder) ? folder : 'blog';
+    const pathname = `uploads/${targetFolder}/${timestamp}-${originalName}`;
 
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads', targetFolder);
-    const filepath = path.join(uploadDir, filename);
+    // Upload to Vercel Blob Storage
+    const blob = await put(pathname, file, {
+      access: 'public',
+    });
 
-    await writeFile(filepath, buffer);
-
-    // Return the public URL
-    const url = `/uploads/${targetFolder}/${filename}`;
-
-    return NextResponse.json({ url, filename });
+    return NextResponse.json({ url: blob.url, filename: `${timestamp}-${originalName}` });
   } catch (error) {
     console.error('Upload error:', error);
     return NextResponse.json(
