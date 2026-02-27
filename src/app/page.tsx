@@ -42,8 +42,22 @@ const Map = dynamic(() => import('@/components/Map'), {
 function useScrollAnimation() {
   const elementRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    // No animations on mobile — everything visible immediately
+    if (isMobile) {
+      setIsVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -52,7 +66,7 @@ function useScrollAnimation() {
       },
       {
         threshold: 0.05,
-        rootMargin: '0px 0px 150px 0px', // Trigger 150px before element enters viewport
+        rootMargin: '0px 0px 150px 0px',
       }
     );
 
@@ -65,7 +79,7 @@ function useScrollAnimation() {
         observer.unobserve(elementRef.current);
       }
     };
-  }, []);
+  }, [isMobile]);
 
   return { elementRef, isVisible };
 }
