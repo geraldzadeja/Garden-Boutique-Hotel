@@ -33,6 +33,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Check that blob token is configured
+    const token = process.env.BLOB_READ_WRITE_TOKEN;
+    if (!token) {
+      console.error('BLOB_READ_WRITE_TOKEN is not set');
+      return NextResponse.json(
+        { error: 'Storage not configured. Please add BLOB_READ_WRITE_TOKEN to environment variables.' },
+        { status: 500 }
+      );
+    }
+
     // Generate unique filename
     const timestamp = Date.now();
     const originalName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
@@ -44,13 +54,15 @@ export async function POST(request: NextRequest) {
     // Upload to Vercel Blob Storage
     const blob = await put(pathname, file, {
       access: 'public',
+      token,
     });
 
     return NextResponse.json({ url: blob.url, filename: `${timestamp}-${originalName}` });
-  } catch (error) {
-    console.error('Upload error:', error);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Upload error:', message);
     return NextResponse.json(
-      { error: 'Failed to upload file' },
+      { error: `Failed to upload file: ${message}` },
       { status: 500 }
     );
   }

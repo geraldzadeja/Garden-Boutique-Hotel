@@ -87,7 +87,7 @@ export default function AdminBlogPage() {
       const fd = new FormData(); fd.append('file', file);
       const response = await fetch('/api/upload', { method: 'POST', body: fd });
       if (response.ok) { const data = await response.json(); setFormData({ ...formData, coverImage: data.url }); }
-      else { showToast('Upload failed', 'error'); }
+      else { const data = await response.json().catch(() => ({})); showToast(data.error || 'Upload failed', 'error'); }
     } catch (error) { console.error('Error:', error); showToast('Upload failed', 'error'); }
     finally { setUploadingImage(false); }
   };
