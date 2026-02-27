@@ -100,6 +100,15 @@ export default function RoomDetailPage() {
     fetchRoom();
   }, [slug]);
 
+  // Auto-transition hero photos every 4 seconds
+  useEffect(() => {
+    if (!room || room.images.length <= 1) return;
+    const interval = setInterval(() => {
+      setImageIndex(prev => (prev + 1) % room.images.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [room]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-white">
@@ -132,14 +141,23 @@ export default function RoomDetailPage() {
 
       {/* Hero Image Gallery */}
       <section className="relative h-[55vh] md:h-[70vh] mt-[70px] sm:mt-[90px] overflow-hidden group">
-        <Image
-          src={room.images[imageIndex] || room.images[0]}
-          alt={room.name}
-          fill
-          className="object-cover transition-all duration-700 ease-out"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
+        <div
+          className="flex h-full transition-transform duration-700 ease-in-out"
+          style={{ transform: `translateX(-${imageIndex * 100}%)` }}
+        >
+          {room.images.map((img, i) => (
+            <div key={i} className="relative w-full h-full flex-shrink-0">
+              <Image
+                src={img}
+                alt={`${room.name} - Photo ${i + 1}`}
+                fill
+                className="object-cover"
+                priority={i === 0}
+              />
+            </div>
+          ))}
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 pointer-events-none" />
 
         {/* Navigation Arrows */}
         {room.images.length > 1 && (
@@ -183,22 +201,22 @@ export default function RoomDetailPage() {
       <section className="py-16 md:py-20 px-4">
         <div className="max-w-5xl mx-auto">
           {/* Stats Bar */}
-          <div className="grid grid-cols-3 md:grid-cols-4 gap-6 md:gap-10 py-8 border-y border-[#e5e5e5] mb-12">
+          <div className="grid grid-cols-4 gap-3 md:gap-10 py-8 border-y border-[#e5e5e5] mb-12">
             <div className="text-center">
-              <p className="text-[9px] text-[#873260] tracking-[0.2em] uppercase mb-2 font-medium">Guests</p>
-              <p className="text-[22px] text-[#111111] font-serif">{room.capacity}</p>
+              <p className="text-[8px] md:text-[9px] text-[#873260] tracking-[0.2em] uppercase mb-2 font-medium">Guests</p>
+              <p className="text-[18px] md:text-[22px] text-[#111111] font-serif">{room.capacity}</p>
             </div>
             <div className="text-center">
-              <p className="text-[9px] text-[#873260] tracking-[0.2em] uppercase mb-2 font-medium">Size</p>
-              <p className="text-[22px] text-[#111111] font-serif">{room.size} m²</p>
+              <p className="text-[8px] md:text-[9px] text-[#873260] tracking-[0.2em] uppercase mb-2 font-medium">Size</p>
+              <p className="text-[18px] md:text-[22px] text-[#111111] font-serif">{room.size} m²</p>
             </div>
             <div className="text-center">
-              <p className="text-[9px] text-[#873260] tracking-[0.2em] uppercase mb-2 font-medium">Bed Type</p>
-              <p className="text-[22px] text-[#111111] font-serif">{room.bedType}</p>
+              <p className="text-[8px] md:text-[9px] text-[#873260] tracking-[0.2em] uppercase mb-2 font-medium">Bed</p>
+              <p className="text-[14px] md:text-[22px] text-[#111111] font-serif leading-tight">{room.bedType}</p>
             </div>
-            <div className="text-center hidden md:block">
-              <p className="text-[9px] text-[#873260] tracking-[0.2em] uppercase mb-2 font-medium">From</p>
-              <p className="text-[26px] text-[#111111] font-serif">€{Number(room.pricePerNight).toFixed(0)}<span className="text-[13px] text-[#666] font-light ml-1">/night</span></p>
+            <div className="text-center">
+              <p className="text-[8px] md:text-[9px] text-[#873260] tracking-[0.2em] uppercase mb-2 font-medium">Price</p>
+              <p className="text-[18px] md:text-[26px] text-[#111111] font-serif leading-tight">€{Number(room.pricePerNight).toFixed(0)}<span className="hidden md:inline text-[13px] text-[#666] font-light ml-1">/night</span></p>
             </div>
           </div>
 
@@ -242,12 +260,6 @@ export default function RoomDetailPage() {
               </div>
             </div>
           )}
-
-          {/* Mobile Price + CTA */}
-          <div className="md:hidden mb-8 text-center">
-            <p className="text-[9px] text-[#873260] tracking-[0.2em] uppercase mb-2 font-medium">From</p>
-            <p className="text-[32px] text-[#111111] font-serif mb-6">€{Number(room.pricePerNight).toFixed(0)}<span className="text-[14px] text-[#666] font-light ml-1">/night</span></p>
-          </div>
 
           {/* CTA */}
           <div className="flex flex-col sm:flex-row gap-4">
